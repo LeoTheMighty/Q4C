@@ -13,6 +13,8 @@ class GameScene: SKScene {
     
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
+    private var firstSpot : CGPoint?
+    private var secondSpot : CGPoint?
     
     override func didMove(to view: SKView) {
         //yo
@@ -44,6 +46,25 @@ class GameScene: SKScene {
             n.position = pos
             n.strokeColor = SKColor.green
             self.addChild(n)
+        }
+        
+        if firstSpot == nil {
+            firstSpot = pos
+        }
+        else if secondSpot == nil {
+            secondSpot = pos
+            let path = CGMutablePath.init()
+            path.move(to: firstSpot!)
+            var tangentSpotEnd = secondSpot!
+            tangentSpotEnd.x += 100
+            path.addArc(tangent1End: secondSpot!, tangent2End: tangentSpotEnd, radius: 50)
+            let shape = SKShapeNode()
+            shape.path = path
+            shape.strokeColor = UIColor.white
+            shape.lineWidth = 2
+            addChild(shape)
+            firstSpot = nil
+            secondSpot = nil
         }
     }
     
@@ -82,7 +103,6 @@ class GameScene: SKScene {
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         for t in touches { self.touchUp(atPoint: t.location(in: self)) }
     }
-    
     
     override func update(_ currentTime: TimeInterval) {
         // Called before each frame is rendered
