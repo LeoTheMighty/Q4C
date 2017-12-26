@@ -20,6 +20,16 @@
 		B3009A3C1FEAE8F500A3DDC9 /* Universe.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3009A3B1FEAE8F500A3DDC9 /* Universe.swift */; };
 		B3009A3E1FEAEB5800A3DDC9 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3009A3D1FEAEB5800A3DDC9 /* Game.swift */; };
 		B3009A401FEAECC700A3DDC9 /* PureEnergyGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3009A3F1FEAECC700A3DDC9 /* PureEnergyGame.swift */; };
+		B35E1B8D1FF30115006E3346 /* ParticulateGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35E1B8C1FF30115006E3346 /* ParticulateGame.swift */; };
+		B35E1B8F1FF30141006E3346 /* CelestialGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35E1B8E1FF30141006E3346 /* CelestialGame.swift */; };
+		B35E1B951FF301EC006E3346 /* MolecularGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35E1B941FF301EC006E3346 /* MolecularGame.swift */; };
+		B35E1B971FF30216006E3346 /* BiologicalGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35E1B961FF30216006E3346 /* BiologicalGame.swift */; };
+		B35E1B991FF3022B006E3346 /* AgriculturalGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35E1B981FF3022B006E3346 /* AgriculturalGame.swift */; };
+		B35E1B9B1FF3023A006E3346 /* IndustrialGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35E1B9A1FF3023A006E3346 /* IndustrialGame.swift */; };
+		B35E1B9D1FF3026F006E3346 /* DigitalGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35E1B9C1FF3026F006E3346 /* DigitalGame.swift */; };
+		B35E1B9F1FF30281006E3346 /* SpaceAgeGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35E1B9E1FF30281006E3346 /* SpaceAgeGame.swift */; };
+		B35E1BA11FF302A0006E3346 /* IntergalacticGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35E1BA01FF302A0006E3346 /* IntergalacticGame.swift */; };
+		B35E1BA31FF302B3006E3346 /* UniversalGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = B35E1BA21FF302B3006E3346 /* UniversalGame.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,6 +69,16 @@
 		B3009A3B1FEAE8F500A3DDC9 /* Universe.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Universe.swift; sourceTree = "<group>"; };
 		B3009A3D1FEAEB5800A3DDC9 /* Game.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
 		B3009A3F1FEAECC700A3DDC9 /* PureEnergyGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PureEnergyGame.swift; sourceTree = "<group>"; };
+		B35E1B8C1FF30115006E3346 /* ParticulateGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticulateGame.swift; sourceTree = "<group>"; };
+		B35E1B8E1FF30141006E3346 /* CelestialGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CelestialGame.swift; sourceTree = "<group>"; };
+		B35E1B941FF301EC006E3346 /* MolecularGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MolecularGame.swift; sourceTree = "<group>"; };
+		B35E1B961FF30216006E3346 /* BiologicalGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BiologicalGame.swift; sourceTree = "<group>"; };
+		B35E1B981FF3022B006E3346 /* AgriculturalGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgriculturalGame.swift; sourceTree = "<group>"; };
+		B35E1B9A1FF3023A006E3346 /* IndustrialGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndustrialGame.swift; sourceTree = "<group>"; };
+		B35E1B9C1FF3026F006E3346 /* DigitalGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DigitalGame.swift; sourceTree = "<group>"; };
+		B35E1B9E1FF30281006E3346 /* SpaceAgeGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceAgeGame.swift; sourceTree = "<group>"; };
+		B35E1BA01FF302A0006E3346 /* IntergalacticGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntergalacticGame.swift; sourceTree = "<group>"; };
+		B35E1BA21FF302B3006E3346 /* UniversalGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalGame.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -109,10 +129,20 @@
 		B3009A061FE9F41D00A3DDC9 /* Q4C */ = {
 			isa = PBXGroup;
 			children = (
-				B3009A071FE9F41D00A3DDC9 /* AppDelegate.swift */,
 				B3009A3B1FEAE8F500A3DDC9 /* Universe.swift */,
-				B3009A3F1FEAECC700A3DDC9 /* PureEnergyGame.swift */,
 				B3009A3D1FEAEB5800A3DDC9 /* Game.swift */,
+				B3009A3F1FEAECC700A3DDC9 /* PureEnergyGame.swift */,
+				B35E1B8C1FF30115006E3346 /* ParticulateGame.swift */,
+				B35E1B8E1FF30141006E3346 /* CelestialGame.swift */,
+				B35E1B941FF301EC006E3346 /* MolecularGame.swift */,
+				B35E1B961FF30216006E3346 /* BiologicalGame.swift */,
+				B35E1B981FF3022B006E3346 /* AgriculturalGame.swift */,
+				B35E1B9A1FF3023A006E3346 /* IndustrialGame.swift */,
+				B35E1B9C1FF3026F006E3346 /* DigitalGame.swift */,
+				B35E1B9E1FF30281006E3346 /* SpaceAgeGame.swift */,
+				B35E1BA01FF302A0006E3346 /* IntergalacticGame.swift */,
+				B35E1BA21FF302B3006E3346 /* UniversalGame.swift */,
+				B3009A071FE9F41D00A3DDC9 /* AppDelegate.swift */,
 				B3009A091FE9F41D00A3DDC9 /* GameScene.sks */,
 				B3009A0B1FE9F41D00A3DDC9 /* Actions.sks */,
 				B3009A0D1FE9F41D00A3DDC9 /* GameScene.swift */,
@@ -279,11 +309,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B35E1BA11FF302A0006E3346 /* IntergalacticGame.swift in Sources */,
+				B35E1BA31FF302B3006E3346 /* UniversalGame.swift in Sources */,
+				B35E1B9B1FF3023A006E3346 /* IndustrialGame.swift in Sources */,
+				B35E1B8D1FF30115006E3346 /* ParticulateGame.swift in Sources */,
+				B35E1B9F1FF30281006E3346 /* SpaceAgeGame.swift in Sources */,
 				B3009A0E1FE9F41D00A3DDC9 /* GameScene.swift in Sources */,
+				B35E1B9D1FF3026F006E3346 /* DigitalGame.swift in Sources */,
 				B3009A401FEAECC700A3DDC9 /* PureEnergyGame.swift in Sources */,
 				B3009A3E1FEAEB5800A3DDC9 /* Game.swift in Sources */,
 				B3009A101FE9F41D00A3DDC9 /* GameViewController.swift in Sources */,
 				B3009A3C1FEAE8F500A3DDC9 /* Universe.swift in Sources */,
+				B35E1B951FF301EC006E3346 /* MolecularGame.swift in Sources */,
+				B35E1B8F1FF30141006E3346 /* CelestialGame.swift in Sources */,
+				B35E1B971FF30216006E3346 /* BiologicalGame.swift in Sources */,
+				B35E1B991FF3022B006E3346 /* AgriculturalGame.swift in Sources */,
 				B3009A081FE9F41D00A3DDC9 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
