@@ -7,3 +7,13 @@
 //
 
 import Foundation
+
+class BiologicalGame : Game {
+    init() {
+        
+    }
+    
+    func playGame() {
+        
+    }
+}

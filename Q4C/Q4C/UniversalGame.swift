@@ -7,3 +7,13 @@
 //
 
 import Foundation
+
+class UniversalGame : Game {
+    init() {
+        
+    }
+    
+    func playGame() {
+        
+    }
+}

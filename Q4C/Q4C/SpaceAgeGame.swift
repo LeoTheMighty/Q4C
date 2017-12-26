@@ -7,3 +7,13 @@
 //
 
 import Foundation
+
+class SpaceAgeGame : Game {
+    init() {
+        
+    }
+    
+    func playGame() {
+        
+    }
+}

@@ -7,3 +7,13 @@
 //
 
 import Foundation
+
+class DigitalGame : Game {
+    init() {
+        
+    }
+    
+    func playGame() {
+        
+    }
+}
