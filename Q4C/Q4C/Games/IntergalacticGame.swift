@@ -13,7 +13,27 @@ class IntergalacticGame : Game {
         
     }
     
-    func playGame() {
+    func startGame() {
+        
+    }
+    
+    func resumeGame() {
+        
+    }
+    
+    func saveGame() {
+        
+    }
+    
+    func userTap() {
+        
+    }
+    
+    func userSwipe() {
+        
+    }
+    
+    func userSwirl() {
         
     }
 }

@@ -9,9 +9,23 @@
 import Foundation
 
 public protocol Game {
-  /*
-  * Plays the actual game, using the UIView information with GameScene
-  * Different for every single type of game
-  */
-  func playGame()
+    /*
+    * Plays the actual game, using the UIView information with GameScene
+    * Different for every single type of game
+    */
+    func startGame();
+    
+    /*
+    *
+    *
+    */
+    func resumeGame();
+    
+    func saveGame();
+    
+    func userTap();
+    
+    func userSwipe();
+    
+    func userSwirl();
 }

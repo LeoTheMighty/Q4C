@@ -11,6 +11,7 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    private let universe : Universe = Universe()
     private var label : SKLabelNode?
     private var spinnyNode : SKShapeNode?
 //    private var firstSpot : CGPoint?

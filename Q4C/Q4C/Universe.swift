@@ -6,7 +6,6 @@ enum Levels : Int {
 
 case PureEnergy = 0,
 Particles,
-CelestialBodies,
 Molecular,
 Biological,
 Agricultural,
@@ -22,8 +21,6 @@ func name() -> String {
     return "Pure Energy"
   case .Particles:
     return "Particles"
-  case .CelestialBodies:
-    return "CelestialBodies"
   case .Molecular:
     return "Molecular"
   case .Biological:
@@ -73,7 +70,7 @@ class Universe {
   }
 
   func playGame() {
-    game.playGame()
+    game.startGame()
   }
 
 }
