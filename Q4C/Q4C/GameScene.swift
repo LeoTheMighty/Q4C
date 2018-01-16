@@ -49,9 +49,11 @@ class GameScene: SKScene {
         startGravity.position = originPoint
         addChild(startGravity)
         
+        //BOUNDS OF THE VIEW
         print("Width is " + String.init(describing : self.view?.bounds.width))
         print("Height is " + String.init(describing : self.view?.bounds.height))
         
+        //HOW TO SHOW A SKLABELNODE (delete when not needed)
         let label1 = SKLabelNode(text: "test text node")
         label1.fontColor = UIColor(red: waveColorComponent, green: waveColorComponent, blue: waveColorComponent, alpha: 1)
         label1.fontName = "PingFangTC-Ultralight"
@@ -59,6 +61,7 @@ class GameScene: SKScene {
         label1.color = UIColor(red: backgroundColorComponent, green: backgroundColorComponent, blue: backgroundColorComponent, alpha: 1)
         //addChild(label1)
         
+        //HOW TO SHOW A UILABEL
         let label = UILabel(frame: CGRect(x: 0, y: 0, width: (self.view?.bounds.width)!, height: (self.view?.bounds.height)!))
         label.center = CGPoint(x : (self.view?.bounds.width)! / 2, y : (self.view?.bounds.height)! / 2)
         label.textAlignment = NSTextAlignment.center
@@ -67,6 +70,7 @@ class GameScene: SKScene {
         label.font = UIFont(name: "PingFangTC-Ultralight", size: 15)
         //self.view?.addSubview(label)
         
+        //Keeping the aspect ratio for the pause button
         if self.size.width > self.size.height {
             pauseButtonNode.size = CGSize(width: self.size.height / 20, height: self.size.height / 20)
         }
@@ -74,13 +78,12 @@ class GameScene: SKScene {
             pauseButtonNode.size = CGSize(width : self.size.width / 20, height : self.size.width / 20)
         }
         
-        //pauseButtonNode.size = CGSize(width : self.size.width / 16, height : self.size.height / 16)
+        //Add the pause button
         pauseButtonNode.color = UIColor(red: waveColorComponent, green: waveColorComponent, blue: waveColorComponent, alpha: 1)
         pauseButtonNode.position = CGPoint(x : -(self.size.width / 2) + pauseButtonNode.size.width * 3 / 2, y : (self.size.height / 2) - pauseButtonNode.size.height * 3 / 2)
         addChild(pauseButtonNode)
         
-        
-        
+        //Start off with a big ol' wave
         waves.append(Wave(scene: self, originPoint: originPoint, startingRadius: radiusOfUnaffectedCircle, numPointsInWave: numPointsInWave, massOfPoint: massOfPoint, startColorComponent: waveColorComponent, endColorComponent: backgroundColorComponent))
     }
     
@@ -88,18 +91,13 @@ class GameScene: SKScene {
         if pauseButtonNode.contains(pos) {
             if !self.isPaused {
                 self.isPaused = true
-//                let screenBounds : CGRect = UIScreen.main.bounds
-//                let dimView : SKView = SKView(frame : screenBounds)
-//                let currentScene = SKScene(size: dimView.bounds.size)
-//                self.view?.addSubview(dimView)
-//                currentScene.backgroundColor = UIColor(white: -1/255, alpha: 0.25)
-//                dimView.allowsTransparency = true
-//                dimView.presentScene(currentScene)
-                menu.presentMenu(gameScene: self)
+                self.view?.isUserInteractionEnabled = false
+                menu.presentMenu(parentScene : self)
             }
             else {
                 self.isPaused = false
                 menu.hideMenu()
+                
             }
         }
         else {
@@ -165,16 +163,26 @@ class GameScene: SKScene {
 
 class MenuScene : SKScene {
     
+    var parentScene : SKScene
     let screenBounds : CGRect
     let dimView : SKView
     var alphaColor : CGFloat = 0.25
+    var isShown : Bool = false
+    var isAnimatingMenu : Bool = false
     
     override init() {
+        //placeholder, because the scene isn't placed onto anything yet
+        parentScene = SKScene()
+        
+        //Initializing the dimming SKView
         screenBounds = UIScreen.main.bounds
         dimView = SKView(frame : screenBounds)
         super.init(size : dimView.bounds.size)
         self.backgroundColor = UIColor(white: -1/255, alpha: alphaColor)
         dimView.allowsTransparency = true
+        
+        
+        self.scaleMode = .fill
     }
     
     required convenience init(coder aDecoder: NSCoder) {
@@ -182,15 +190,42 @@ class MenuScene : SKScene {
     }
     
     override func update(_ currentTime: TimeInterval) {
-        alphaColor += 0.01
-        self.backgroundColor = UIColor(white: -1/255, alpha: alphaColor)
+        //alphaColor += 0.01
+        //self.backgroundColor = UIColor(white: -1/255, alpha: alphaColor)
     }
     
-    func presentMenu(gameScene : SKScene) {
-        gameScene.view?.addSubview(dimView)
+    func presentMenu(parentScene : SKScene) {
+        self.parentScene = parentScene
+        
+        //Dim the rest of the screen
+        parentScene.view?.addSubview(dimView)
         dimView.presentScene(self)
         
+        isAnimatingMenu = true
+        let menu : SKSpriteNode = SKSpriteNode(imageNamed: "ball")
+        menu.position = CGPoint(x: self.size.width / 2, y: self.size.height / 2)
+        menu.size = CGSize(width: 0, height: 0)
         
+        let endWidth : CGFloat
+        let endHeight : CGFloat
+        
+        if self.size.width > self.size.height {
+            endHeight = 7 * self.size.height / 8
+            endWidth = 7 * self.size.height / 8
+        }
+        else {
+            endHeight = 7 * self.size.width / 8
+            endWidth = 7 * self.size.width / 8
+        }
+        
+        let openMenuWidth = SKAction.resize(toWidth: endWidth, duration: 0.6)
+        let openMenuHeight = SKAction.resize(toHeight: endHeight, duration: 0.6)
+        openMenuWidth.timingMode = SKActionTimingMode.easeInEaseOut
+        openMenuHeight.timingMode = SKActionTimingMode.easeInEaseOut
+        let openMenu = SKAction.group([openMenuWidth, openMenuHeight])
+        
+        addChild(menu)
+        menu.run(openMenu)
     }
     
     func hideMenu() {
