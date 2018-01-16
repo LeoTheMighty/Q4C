@@ -13,6 +13,10 @@ class IndustrialGame : Game {
         
     }
     
+    func update() {
+        
+    }
+    
     func startGame() {
         
     }

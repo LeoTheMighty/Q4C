@@ -31,9 +31,11 @@ class GameViewController: UIViewController {
             view.showsNodeCount = true
         }
     }
+    
+    //override func
 
     override var shouldAutorotate: Bool {
-        return true
+        return false
     }
 
     override var supportedInterfaceOrientations: UIInterfaceOrientationMask {

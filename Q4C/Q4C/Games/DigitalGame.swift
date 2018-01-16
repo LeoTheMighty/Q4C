@@ -13,6 +13,10 @@ class DigitalGame : Game {
         
     }
     
+    func update() {
+        
+    }
+    
     func startGame() {
         
     }

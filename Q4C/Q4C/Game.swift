@@ -23,6 +23,8 @@ public protocol Game {
     
     func saveGame();
     
+    func update();
+    
     func userTap();
     
     func userSwipe();

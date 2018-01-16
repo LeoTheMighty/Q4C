@@ -13,6 +13,10 @@ class UniversalGame : Game {
         
     }
     
+    func update() {
+        
+    }
+    
     func startGame() {
         
     }

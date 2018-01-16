@@ -13,6 +13,10 @@ class MolecularGame : Game {
         
     }
     
+    func update() {
+        
+    }
+    
     func startGame() {
         
     }

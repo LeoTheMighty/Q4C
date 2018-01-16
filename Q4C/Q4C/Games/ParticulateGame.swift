@@ -13,6 +13,10 @@ class ParticulateGame : Game {
         
     }
     
+    func update() {
+        
+    }
+    
     func startGame() {
         
     }

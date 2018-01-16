@@ -13,6 +13,10 @@ class AgriculturalGame : Game {
         
     }
     
+    func update() {
+        
+    }
+    
     func startGame() {
         
     }

@@ -13,6 +13,10 @@ class BiologicalGame : Game {
         
     }
     
+    func update() {
+        
+    }
+    
     func startGame() {
         
     }

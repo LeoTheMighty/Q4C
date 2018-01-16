@@ -13,6 +13,10 @@ class PureEnergyGame : Game {
         
     }
     
+    func update() {
+        
+    }
+    
     func startGame() {
         
     }

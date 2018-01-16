@@ -13,6 +13,10 @@ class IntergalacticGame : Game {
         
     }
     
+    func update() {
+        
+    }
+    
     func startGame() {
         
     }

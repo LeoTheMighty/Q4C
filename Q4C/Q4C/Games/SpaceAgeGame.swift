@@ -13,6 +13,10 @@ class SpaceAgeGame : Game {
         
     }
     
+    func update() {
+        
+    }
+    
     func startGame() {
         
     }

@@ -14,8 +14,9 @@ class GameScene: SKScene {
     private let universe : Universe = Universe()
     
     let pauseButtonNode = SKSpriteNode(imageNamed: "pauseButton")
+    var isGamePaused : Bool = false
     
-    //private var label : UILabel = UILabel()
+    let menu : MenuScene = MenuScene()
     
     private var touchGravity : SKFieldNode?
     private var startGravity = SKFieldNode.radialGravityField()
@@ -37,6 +38,9 @@ class GameScene: SKScene {
     private let waveColorComponent : CGFloat = 255 / 255
     
     override func didMove(to view: SKView) {
+        
+        self.scaleMode = .fill
+        
         //initialize the physics circle
         self.backgroundColor = UIColor(red : backgroundColorComponent, green : backgroundColorComponent, blue : backgroundColorComponent, alpha : 1)
         originPoint = CGPoint(x: -self.size.width / 2, y: -self.size.height / 2)
@@ -44,6 +48,9 @@ class GameScene: SKScene {
         startGravity.strength = startGravityStrength
         startGravity.position = originPoint
         addChild(startGravity)
+        
+        print("Width is " + String.init(describing : self.view?.bounds.width))
+        print("Height is " + String.init(describing : self.view?.bounds.height))
         
         let label1 = SKLabelNode(text: "test text node")
         label1.fontColor = UIColor(red: waveColorComponent, green: waveColorComponent, blue: waveColorComponent, alpha: 1)
@@ -59,8 +66,6 @@ class GameScene: SKScene {
         label.textColor = UIColor(red: waveColorComponent, green: waveColorComponent, blue: waveColorComponent, alpha: 1)
         label.font = UIFont(name: "PingFangTC-Ultralight", size: 15)
         //self.view?.addSubview(label)
-        
-        
         
         if self.size.width > self.size.height {
             pauseButtonNode.size = CGSize(width: self.size.height / 20, height: self.size.height / 20)
@@ -80,13 +85,28 @@ class GameScene: SKScene {
     }
     
     func touchDown(atPoint pos : CGPoint) {
-        touchGravity = SKFieldNode.radialGravityField()
-        touchGravity?.position = pos
-        touchGravity?.strength = -1
-        addChild(touchGravity!)
-        
         if pauseButtonNode.contains(pos) {
-            self.isPaused = !self.isPaused
+            if !self.isPaused {
+                self.isPaused = true
+//                let screenBounds : CGRect = UIScreen.main.bounds
+//                let dimView : SKView = SKView(frame : screenBounds)
+//                let currentScene = SKScene(size: dimView.bounds.size)
+//                self.view?.addSubview(dimView)
+//                currentScene.backgroundColor = UIColor(white: -1/255, alpha: 0.25)
+//                dimView.allowsTransparency = true
+//                dimView.presentScene(currentScene)
+                menu.presentMenu(gameScene: self)
+            }
+            else {
+                self.isPaused = false
+                menu.hideMenu()
+            }
+        }
+        else {
+            touchGravity = SKFieldNode.radialGravityField()
+            touchGravity?.position = pos
+            touchGravity?.strength = -1
+            addChild(touchGravity!)
         }
     }
     
@@ -143,6 +163,42 @@ class GameScene: SKScene {
     }
 }
 
+class MenuScene : SKScene {
+    
+    let screenBounds : CGRect
+    let dimView : SKView
+    var alphaColor : CGFloat = 0.25
+    
+    override init() {
+        screenBounds = UIScreen.main.bounds
+        dimView = SKView(frame : screenBounds)
+        super.init(size : dimView.bounds.size)
+        self.backgroundColor = UIColor(white: -1/255, alpha: alphaColor)
+        dimView.allowsTransparency = true
+    }
+    
+    required convenience init(coder aDecoder: NSCoder) {
+        self.init()
+    }
+    
+    override func update(_ currentTime: TimeInterval) {
+        alphaColor += 0.01
+        self.backgroundColor = UIColor(white: -1/255, alpha: alphaColor)
+    }
+    
+    func presentMenu(gameScene : SKScene) {
+        gameScene.view?.addSubview(dimView)
+        dimView.presentScene(self)
+        
+        
+    }
+    
+    func hideMenu() {
+        self.removeFromParent()
+        dimView.removeFromSuperview()
+    }
+}
+
 class Wave {
     
     private let birthTime : TimeInterval
@@ -177,7 +233,10 @@ class Wave {
     func initCircle(scene : SKScene) {
         let circlePath : CGMutablePath = CGMutablePath.init()
         
-        for angle in 0...numPointsInWave {
+        let startAngle = -numPointsInWave / 4
+        let endAngle = numPointsInWave / 2
+        
+        for angle in startAngle...endAngle {
             let physicsPoint = SKSpriteNode()
             physicsPoint.position.x = cos(2*CGFloat(angle)*CGFloat.pi/CGFloat(numPointsInWave)) * startingRadius
             physicsPoint.position.y = sin(2*CGFloat(angle)*CGFloat.pi/CGFloat(numPointsInWave)) * startingRadius
@@ -192,7 +251,7 @@ class Wave {
             scene.addChild(physicsPoint)
             physicsPoint.physicsBody!.applyForce(CGVector(dx: 3*physicsPoint.position.x, dy: 3*physicsPoint.position.y))
             physicsPoint.position = CGPoint(x: physicsPoint.position.x + originPoint.x, y: physicsPoint.position.y + originPoint.y)
-            if angle == 0 {
+            if angle == startAngle {
                 circlePath.move(to: physicsPoint.position)
             }
             else {
@@ -216,7 +275,7 @@ class Wave {
             point.physicsBody!.applyForce(GameScene.vectorFromPoints(point1: point.position, point2: circlePath.currentPoint))
             point.physicsBody!.applyForce(GameScene.vectorFromPoints(point1: point.position, point2: pointsOfCircle[nextIndex].position))
             circlePath.addLine(to: point.position)
-            if nextIndex == numPointsInWave {
+            if nextIndex == pointsOfCircle.count - 1 {
                 nextIndex = 0
             }
             else {
