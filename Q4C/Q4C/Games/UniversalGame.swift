@@ -7,13 +7,14 @@
 //
 
 import Foundation
+import SpriteKit
 
 class UniversalGame : Game {
-    init() {
+    required init(currentTime : TimeInterval) {
         
     }
     
-    func update() {
+    func update(currentTime : TimeInterval) {
         
     }
     
@@ -29,15 +30,15 @@ class UniversalGame : Game {
         
     }
     
-    func userTap() {
+    func userTap(point : CGPoint) {
         
     }
     
-    func userSwipe() {
+    func userSwipe(point : CGPoint) {
         
     }
     
-    func userSwirl() {
+    func userSwirl(point : CGPoint) {
         
     }
 }

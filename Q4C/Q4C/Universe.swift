@@ -37,6 +37,7 @@ func name() -> String {
     return "Intergalactic"
   case .Universal:
     return "Universal"
+    }
 }
 
 func threshold() -> Int {
@@ -55,8 +56,6 @@ func threshold() -> Int {
 
 }
 
-}
-
 class Universe {
 
   var level : Levels
@@ -66,7 +65,7 @@ class Universe {
   init() {
     level = Levels.PureEnergy
     complexity = 0
-    game = PureEnergyGame()
+    game = PureEnergyGame(currentTime : NSDate().timeIntervalSince1970)
   }
 
   func playGame() {
