@@ -41,4 +41,16 @@ class IndustrialGame : Game {
     func userSwirl(point : CGPoint) {
         
     }
+    
+    func userPress(point : CGPoint) {
+        
+    }
+    
+    func userTouchMove(point : CGPoint) {
+        
+    }
+    
+    func userReleaseTouch(point : CGPoint) {
+        
+    }
 }

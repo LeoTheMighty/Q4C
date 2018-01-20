@@ -1,11 +1,10 @@
 import Foundation
-//import UIKit
-//yoyo
+import SpriteKit
 
 enum Levels : Int {
 
 case PureEnergy = 0,
-Particles,
+Particulate,
 Molecular,
 Biological,
 Agricultural,
@@ -19,8 +18,8 @@ func name() -> String {
   switch self {
   case .PureEnergy:
     return "Pure Energy"
-  case .Particles:
-    return "Particles"
+  case .Particulate:
+    return "Particulate"
   case .Molecular:
     return "Molecular"
   case .Biological:
@@ -58,18 +57,44 @@ func threshold() -> Int {
 
 class Universe {
 
-  var level : Levels
-  var complexity : Int
-  var game : Game
-
-  init() {
-    level = Levels.PureEnergy
-    complexity = 0
-    game = PureEnergyGame(currentTime : NSDate().timeIntervalSince1970)
-  }
-
-  func playGame() {
-    game.startGame()
-  }
+    var level : Levels
+    var complexity : Int
+    var game : Game
+    var scene : SKScene
+    
+    init() {
+        self.scene = SKScene()
+        level = Levels.Universal
+        complexity = 0
+        game = PureEnergyGame(scene: scene, currentTime: NSDate().timeIntervalSince1970)
+    }
+    
+    init(scene : SKScene) {
+        self.scene = scene
+        level = Levels.PureEnergy
+        complexity = 0
+        game = PureEnergyGame(scene : scene, currentTime : NSDate().timeIntervalSince1970)
+    }
+    
+    init(scene : SKScene, levelName : String) {
+        self.scene = scene
+        complexity = 0
+        if levelName == "Pure Energy" {
+            level = Levels.PureEnergy
+            game = PureEnergyGame(scene: scene, currentTime: NSDate().timeIntervalSince1970)
+        }
+        else  if levelName == "Particulate" {
+            level = Levels.Particulate
+            game = ParticulateGame(currentTime: NSDate().timeIntervalSince1970)
+        }
+        else {
+            level = Levels.Molecular
+            game = MolecularGame(currentTime: NSDate().timeIntervalSince1970)
+        }
+    }
+    
+    func playGame() {
+        game = PureEnergyGame(scene: scene, currentTime: NSDate().timeIntervalSince1970)
+    }
 
 }

@@ -12,15 +12,6 @@ import SpriteKit
 public protocol Game {
     
     /*
-     * Use "currentTime" to initialize when the game begins which will help for
-     * some of the animation aspects to it.
-     * Don't worry about how the time is being calculated unless it becomes an issue
-     * Just initialize the beginning time.
-     * You are encouraged to add your own init() method and call this one inside of it
-     */
-    init(currentTime : TimeInterval);
-    
-    /*
     * Plays the actual game, using the UIView information with GameScene
     * Different for every single type of game
     */
@@ -52,4 +43,10 @@ public protocol Game {
     func userSwipe(point : CGPoint);
     
     func userSwirl(point : CGPoint);
+    
+    func userPress(point : CGPoint);
+    
+    func userTouchMove(point : CGPoint);
+    
+    func userReleaseTouch(point : CGPoint);
 }
