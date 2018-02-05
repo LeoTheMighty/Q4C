@@ -8,7 +8,7 @@
 // Walking across
 // THe sitting room
 // I turn the television on
-// 
+// kraft und macht
 
 import Foundation
 import SpriteKit
