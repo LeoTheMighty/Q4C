@@ -5,6 +5,10 @@
 //  Created by Leonid Belyi on 12/20/17.
 //  Copyright © 2017 SoLux. All rights reserved.
 //
+// Walking across
+// THe sitting room
+// I turn the television on
+// 
 
 import Foundation
 import SpriteKit
