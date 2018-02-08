@@ -16,7 +16,9 @@ class ParticulateGame : Game {
     }
     
     func update(currentTime : TimeInterval) {
-        
+        // A bunch of particles everywhere
+        // [] PArticles <-- to be a class
+        //for each
     }
     
     func startGame() {
@@ -43,6 +45,8 @@ class ParticulateGame : Game {
         
     }
     
+    
+    // Use these three
     func userPress(point : CGPoint) {
         
     }
@@ -52,6 +56,10 @@ class ParticulateGame : Game {
     }
     
     func userReleaseTouch(point : CGPoint) {
+        
+    }
+    
+    class Particle : SKNode {
         
     }
 }
