@@ -40,7 +40,7 @@ class PureEnergyGame : Game {
         self.startTime = currentTime
         self.scene = scene
         
-        //initialize the physics circle
+        
         scene.backgroundColor = UIColor(red : backgroundColorComponent, green : backgroundColorComponent, blue : backgroundColorComponent, alpha : 1)
         originPoint = CGPoint(x: -scene.size.width / 2, y: -scene.size.height / 2)
         startTime = NSDate().timeIntervalSince1970
@@ -69,17 +69,7 @@ class PureEnergyGame : Game {
         }
     }
     
-    func startGame() {
-        
-    }
-    
-    func resumeGame() {
-        
-    }
-    
-    func saveGame() {
-        
-    }
+   
     
     func userPress(point : CGPoint) {
         touchGravity = SKFieldNode.radialGravityField()
@@ -97,17 +87,7 @@ class PureEnergyGame : Game {
         touchGravity = nil
     }
     
-    func userTap(point : CGPoint) {
-        
-    }
     
-    func userSwipe(point : CGPoint) {
-        
-    }
-    
-    func userSwirl(point : CGPoint) {
-        
-    }
     
     class Wave {
         
@@ -222,4 +202,27 @@ class PureEnergyGame : Game {
             }
         }
     }
+}
+
+func userTap(point : CGPoint) {
+    
+}
+
+func userSwipe(point : CGPoint) {
+    
+}
+
+func userSwirl(point : CGPoint) {
+    
+}
+func startGame() {
+    
+}
+
+func resumeGame() {
+    
+}
+
+func saveGame() {
+    
 }
