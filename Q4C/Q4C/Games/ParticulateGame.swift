@@ -68,7 +68,7 @@ class ParticulateGame : Game {
     
     
    class Proton {
-        //establish the basic properties of class proton
+        //establish the properties of class proton
         private var lifeTime : TimeInterval = 35
         private var origin : CGPoint
         private let startColorComponent : CGFloat
@@ -78,7 +78,7 @@ class ParticulateGame : Game {
     
     
     
-      
+    
     init(scene : SKScene, startColorComponent : CGFloat, endColorComponent : CGFloat, birthTime : TimeInterval, origin : CGPoint, prot : SKSpriteNode) {
             lifeTime = NSDate().timeIntervalSince1970
             

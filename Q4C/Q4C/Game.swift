@@ -1,7 +1,8 @@
 //
 //  Game.swift
 //  Q4C
-//
+// let prot = SKSpriteNode(imageNamed: "ball")
+
 //  Created by Leonid Belyi on 12/20/17.
 //  Copyright © 2017 SoLux. All rights reserved.
 //
