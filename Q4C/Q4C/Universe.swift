@@ -85,7 +85,7 @@ class Universe {
         }
         else  if levelName == "Particulate" {
             level = Levels.Particulate
-            game = ParticulateGame(currentTime: NSDate().timeIntervalSince1970)
+            game = ParticulateGame(scene: scene, currentTime: NSDate().timeIntervalSince1970)
         }
         else {
             level = Levels.Molecular

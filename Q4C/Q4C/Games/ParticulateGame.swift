@@ -26,7 +26,7 @@ class ParticulateGame : Game {
     private let timeBetweenProtons : TimeInterval = 3.0
     
     private let backgroundColorComponent : CGFloat = 48/255
-    private let waveColorComponent : CGFloat = 255 / 255
+    
     
     init(scene : SKScene, currentTime : TimeInterval){
         self.startTime = currentTime
@@ -73,21 +73,20 @@ class ParticulateGame : Game {
         private var origin : CGPoint
         private let startColorComponent : CGFloat
         private let endColorComponent : CGFloat
-        private let scene : SKScene
+        //private let scene : SKScene
         private var texture: SKTexture?
+       // private let size : 
     
     
     
-    
-    init(scene : SKScene, startColorComponent : CGFloat, endColorComponent : CGFloat, birthTime : TimeInterval, origin : CGPoint, prot : SKSpriteNode) {
-            lifeTime = NSDate().timeIntervalSince1970
-            
+    init(scene : SKScene, startColorComponent : CGFloat, endColorComponent : CGFloat, lifeTime : TimeInterval, origin : CGPoint, prot : SKSpriteNode) {
+        
         let prot = SKSpriteNode(imageNamed: "ball")
-            prot.position.x =
-            prot.position.y =
+            /*prot.position.x =
+            prot.position.y =*/
             prot.texture = SKTexture()
-            prot.physicsBody = SKPhysicsBody(texture : prot.texture!, size: CGSize(width: 5, height: 5))
-            
+            prot.physicsBody = SKPhysicsBody(texture : prot.texture!, size: CGSize(width: 0.5, height: 0.5))
+        
             self.origin = origin
             self.startColorComponent = startColorComponent
             self.endColorComponent = endColorComponent
@@ -95,8 +94,8 @@ class ParticulateGame : Game {
         
         
     
-    
-        /* these also are not used
+    }
+        //these also are not used
         func userTap(point : CGPoint) {
             
         }
@@ -107,9 +106,9 @@ class ParticulateGame : Game {
         
         func userSwirl(point : CGPoint) {
  
-}*/
+        }
 
-/* what it do? These are not used in pure energy
+//what it do? These are not used in pure energy
  func startGame() {
  
  }
@@ -120,13 +119,7 @@ class ParticulateGame : Game {
  
  func saveGame() {
  
- }*/
+ }
 
 
-    
-    
-    
-    }
-    
-
-}
+ }

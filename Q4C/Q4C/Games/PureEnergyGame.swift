@@ -14,6 +14,30 @@ import Foundation
 import SpriteKit
 
 class PureEnergyGame : Game {
+    func startGame() {
+        
+    }
+    
+    func resumeGame() {
+        
+    }
+    
+    func saveGame() {
+        
+    }
+    
+    func userTap(point: CGPoint) {
+        
+    }
+    
+    func userSwipe(point: CGPoint) {
+        
+    }
+    
+    func userSwirl(point: CGPoint) {
+        
+    }
+    
     
     private var scene : SKScene
     
@@ -204,25 +228,4 @@ class PureEnergyGame : Game {
     }
 }
 
-func userTap(point : CGPoint) {
-    
-}
 
-func userSwipe(point : CGPoint) {
-    
-}
-
-func userSwirl(point : CGPoint) {
-    
-}
-func startGame() {
-    
-}
-
-func resumeGame() {
-    
-}
-
-func saveGame() {
-    
-}
