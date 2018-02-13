@@ -60,6 +60,9 @@ class PureEnergyGame : Game {
     
     private let backgroundColorComponent : CGFloat = 48 / 255
     private let waveColorComponent : CGFloat = 255 / 255
+    //private var complexityCounter : SKLabelNode!
+    
+    //private var complexity : Int
     
     init(scene : SKScene, currentTime : TimeInterval) {
         self.startTime = currentTime
@@ -74,6 +77,22 @@ class PureEnergyGame : Game {
         scene.addChild(startGravity)
         
         waves.append(Wave(scene: scene, originPoint: originPoint, startingRadius: radiusOfUnaffectedCircle, numPointsInWave: numPointsInWave, massOfPoint: massOfPoint, startColorComponent: waveColorComponent, endColorComponent: backgroundColorComponent))
+        
+      
+        
+        /* var complexity = 0 {
+            didSet{
+                complexityCounter.text = "Complexity: \(complexity)"
+            }
+        
+        }
+        
+        complexityCounter = SKLabelNode(fontNamed: "Copperplate")
+        complexityCounter.text = "Complexity: 0"
+        complexityCounter.fontColor = SKColor.purple
+        complexityCounter.verticalAlignmentMode = .top
+        complexityCounter.position = CGPoint(x: 115, y: 400)
+        scene.addChild(complexityCounter)*/
     }
     
     func update(currentTime : TimeInterval) {
@@ -112,7 +131,10 @@ class PureEnergyGame : Game {
         touchGravity = nil
     }
     
-    
+    func locateIntersection(point : CGPoint){
+        //take in the points of two waves, if there is overlap, it should output number of overlaps
+        // :) happy valentine's day <3
+    }
     
     class Wave {
         
@@ -128,6 +150,8 @@ class PureEnergyGame : Game {
         private let startColorComponent : CGFloat
         private let endColorComponent : CGFloat
         private var toBeDestroyedVar : Bool = false
+        private var complexityCounter : SKLabelNode!
+       
         
         init(scene : SKScene, originPoint : CGPoint, startingRadius : CGFloat, numPointsInWave : Int, massOfPoint : CGFloat, startColorComponent : CGFloat, endColorComponent : CGFloat) {
             birthTime = NSDate().timeIntervalSince1970
@@ -143,6 +167,20 @@ class PureEnergyGame : Game {
             
             initCircle(scene : scene)
             scene.addChild(circle)
+        
+            var complexity = 0 {
+                didSet{
+                    complexityCounter.text = "Complexity: \(complexity)"
+                }
+                
+            }
+            
+            complexityCounter = SKLabelNode(fontNamed: "Copperplate")
+            complexityCounter.text = "Complexity: 0"
+            complexityCounter.fontColor = SKColor.purple
+            complexityCounter.verticalAlignmentMode = .top
+            complexityCounter.position = CGPoint(x: 115, y: 400)
+            scene.addChild(complexityCounter)
         }
         
         func initCircle(scene : SKScene) {
@@ -163,6 +201,9 @@ class PureEnergyGame : Game {
                 physicsPoint.physicsBody?.isDynamic = true
                 physicsPoint.isHidden = false
                 pointsOfCircle.append(physicsPoint)
+                
+                
+            
                 scene.addChild(physicsPoint)
                 physicsPoint.physicsBody!.applyForce(CGVector(dx: 3*physicsPoint.position.x, dy: 3*physicsPoint.position.y))
                 physicsPoint.position = CGPoint(x: physicsPoint.position.x + originPoint.x, y: physicsPoint.position.y + originPoint.y)

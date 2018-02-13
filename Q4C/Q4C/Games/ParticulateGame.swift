@@ -27,7 +27,7 @@ class ParticulateGame : Game {
     private let timeBetweenProtons : TimeInterval = 3.0
     
     private let backgroundColorComponent : CGFloat = 48/255
-    private let complexityCounter : SKLabelNode =
+    private var complexityCounter : SKLabelNode!
     
     init(scene : SKScene, currentTime : TimeInterval){
         self.startTime = currentTime
@@ -37,7 +37,11 @@ class ParticulateGame : Game {
         originPoint = CGPoint(x: -scene.size.width / 2, y: -scene.size.height / 2)
         startTime = NSDate().timeIntervalSince1970
         //make the label for complexity appear onscreen
-        
+        complexityCounter = SKLabelNode(fontNamed: "Chalkduster")
+        complexityCounter.text = "Complexity: 0"
+        complexityCounter.horizontalAlignmentMode = .right
+        complexityCounter.position = CGPoint(x: 0, y: 0)
+        //addChild(complexityCounter)
         
         //proton.append(
     
