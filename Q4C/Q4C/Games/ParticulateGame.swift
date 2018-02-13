@@ -12,7 +12,7 @@ import SpriteKit
 
 class ParticulateGame : Game {
    
-    
+    //issues still: color und size?
 
     //size of radius, shape, use ball png -> how? SKTexture...
     //also must code in the dwindling energy reserve as protons form
@@ -27,7 +27,7 @@ class ParticulateGame : Game {
     private let timeBetweenProtons : TimeInterval = 3.0
     
     private let backgroundColorComponent : CGFloat = 48/255
-    
+    private let complexityCounter : SKLabelNode =
     
     init(scene : SKScene, currentTime : TimeInterval){
         self.startTime = currentTime
@@ -36,6 +36,7 @@ class ParticulateGame : Game {
         scene.backgroundColor = UIColor(red : backgroundColorComponent, green : backgroundColorComponent, blue : backgroundColorComponent, alpha : 1)
         originPoint = CGPoint(x: -scene.size.width / 2, y: -scene.size.height / 2)
         startTime = NSDate().timeIntervalSince1970
+        //make the label for complexity appear onscreen
         
         
         //proton.append(
@@ -83,9 +84,11 @@ class ParticulateGame : Game {
     init(scene : SKScene, startColorComponent : CGFloat, endColorComponent : CGFloat, lifeTime : TimeInterval, origin : CGPoint, prot : SKSpriteNode) {
         
         let prot = SKSpriteNode(imageNamed: "ball")
-            /*prot.position.x =
+
+        /*prot.position.x =
             prot.position.y =*/
             prot.texture = SKTexture()
+            //prot.size = CGSizeMake
             prot.physicsBody = SKPhysicsBody(texture : prot.texture!, size: CGSize(width: 0.5, height: 0.5))
         
             self.origin = origin

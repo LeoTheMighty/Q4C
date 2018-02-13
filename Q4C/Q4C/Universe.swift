@@ -73,7 +73,8 @@ class Universe {
         self.scene = scene
         level = Levels.PureEnergy
         complexity = 0
-        game = PureEnergyGame(scene : scene, currentTime : NSDate().timeIntervalSince1970)
+       // game = PureEnergyGame(scene : scene, currentTime : NSDate().timeIntervalSince1970)
+        game = ParticulateGame(scene : scene, currentTime : NSDate().timeIntervalSince1970)
     }
     
     init(scene : SKScene, levelName : String) {
