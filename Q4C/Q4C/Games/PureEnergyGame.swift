@@ -131,15 +131,16 @@ class PureEnergyGame : Game {
         touchGravity = nil
     }
     
-    func locateIntersection(point : CGPoint){
+    //func locateIntersection(point : CGPoint){
         //take in the points of two waves, if there is overlap, it should output number of overlaps
         // :) happy valentine's day <3
-    }
+    //}
     
     class Wave {
         
         private let birthTime : TimeInterval
         private let lifeSpan : TimeInterval = 15
+        private let touchingRadius : CGFloat = 9
         private let originPoint : CGPoint
         private let numPointsInWave : Int
         private var pointsOfCircle : [SKNode] = []
@@ -254,6 +255,19 @@ class PureEnergyGame : Game {
             circle.path = circlePath
             circle.lineWidth = 2
             scene.addChild(circle)
+        }
+        
+        func isTouching(wave : Wave) -> Bool {
+            for point1 in pointsOfCircle {
+                for point2 in wave.pointsOfCircle {
+                    let xDist = point2.position.x - point1.position.x
+                    let yDist = point2.position.y - point1.position.y
+                    if (sqrt((xDist * xDist) + (yDist * yDist)) < touchingRadius) {
+                        return true
+                    }
+                }
+            }
+            return false
         }
         
         func toBeDestroyed() -> Bool {
