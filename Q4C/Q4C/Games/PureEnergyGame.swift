@@ -65,6 +65,10 @@ class PureEnergyGame : Game {
     private var complexityCounter : SKLabelNode!
     
     init(scene : SKScene, currentTime : TimeInterval) {
+        
+        // Check for userdefaults
+        // Load if necessary and start new game if applicable
+        
         self.startTime = currentTime
         self.scene = scene
         
@@ -79,7 +83,7 @@ class PureEnergyGame : Game {
         
         complexityCounter = SKLabelNode(fontNamed: "Copperplate")
         complexityCounter.text = "Complexity: 0"
-        complexityCounter.fontColor = SKColor.purple
+        complexityCounter.fontColor = SKColor.white
         complexityCounter.verticalAlignmentMode = .top
         complexityCounter.position = CGPoint(x: 115, y: 400)
         

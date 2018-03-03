@@ -13,18 +13,16 @@ import SpriteKit
 public protocol Game {
     
     /*
-    * Plays the actual game, using the UIView information with GameScene
-    * Different for every single type of game
-    */
-    func startGame();
+     * Put the required info of the game into the
+     * UserDefaults
+     */
+    func saveData();
     
     /*
-    *
-    *
-    */
-    func resumeGame();
-    
-    func saveGame();
+     * Takes the required info from the UserDefaults into
+     * the the actual instance of the game
+     */
+    func loadData();
     
     /*
      * Use this to update your game. You can use the time interval with relation to
@@ -45,6 +43,9 @@ public protocol Game {
     
     func userSwirl(point : CGPoint);
     
+    /*
+     * Depreciated
+     */
     func userPress(point : CGPoint);
     
     func userTouchMove(point : CGPoint);
