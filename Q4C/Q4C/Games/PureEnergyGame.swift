@@ -69,7 +69,6 @@ class PureEnergyGame : Game {
         self.startTime = currentTime
         self.scene = scene
         
-        
         scene.backgroundColor = UIColor(red : backgroundColorComponent, green : backgroundColorComponent, blue : backgroundColorComponent, alpha : 1)
         originPoint = CGPoint(x: -scene.size.width / 2, y: -scene.size.height / 2)
         startTime = NSDate().timeIntervalSince1970
@@ -94,9 +93,13 @@ class PureEnergyGame : Game {
     
     func update(currentTime : TimeInterval) {
         let elapsedTime = currentTime - startTime
+        // If the elapsed time calls for another wave, create another one
         if Int(elapsedTime / timeBetweenWaves) > numWaves {
+            // Append another wave to the waves array
             waves.append(Wave(scene: scene, originPoint: originPoint, startingRadius: radiusOfUnaffectedCircle, numPointsInWave: numPointsInWave, massOfPoint: massOfPoint, startColorComponent : waveColorComponent, endColorComponent : backgroundColorComponent))
             numWaves+=1
+            
+            // Update the label
             complexity = numWaves
             complexityCounter.text = "Complexity: \(complexity)"
         }
@@ -107,30 +110,18 @@ class PureEnergyGame : Game {
             if (wave.toBeDestroyed()) {
                 waves.remove(at: index)
             }
+            if (index + 1) < waves.count {
+                if wave.isTouching(wave : waves[index + 1]) {
+                    // Do the touching :)
+                    // wave and waves[index + 1]
+                    // both of them need to be removed
+                    waves.remove(at: index)
+                    waves.remove(at: index + 1)
+                }
+            }
             index += 1
         }
     }
-    
-    /*func locateIntersect(wave1 : Wave,  wave2 : Wave) -> Int {
-        //compare distance <-> points in input waves, add complexity when thrshld is Xed
-        for p in pointsOfCircle{
-        //calls an array of points
-        
-        }
-    }*/
-    
-    /*func isTouching(wave : waves, wave2 : waves.Int(numWaves)) -> Bool {
-        for point in wave.pointsOfCircle {
-            for point1 in wave2.pointsOfCircle {
-                let xDist = point1.position.x - point1.position.x
-                let yDist = point1.position.y - point1.position.y
-                if (sqrt((xDist * xDist) + (yDist * yDist)) < touchingRadius) {
-                    return true
-                }
-            }
-        }
-        return false
-    }*/
     
     func userPress(point : CGPoint) {
         touchGravity = SKFieldNode.radialGravityField()
@@ -168,9 +159,6 @@ class PureEnergyGame : Game {
         private let endColorComponent : CGFloat
         private var toBeDestroyedVar : Bool = false
         
-    
-       
-        
         init(scene : SKScene, originPoint : CGPoint, startingRadius : CGFloat, numPointsInWave : Int, massOfPoint : CGFloat, startColorComponent : CGFloat, endColorComponent : CGFloat) {
             birthTime = NSDate().timeIntervalSince1970
             self.startColorComponent = startColorComponent
@@ -185,7 +173,6 @@ class PureEnergyGame : Game {
             
             initCircle(scene : scene)
             scene.addChild(circle)
-        
            
         }
         
@@ -262,13 +249,19 @@ class PureEnergyGame : Game {
             scene.addChild(circle)
         }
         
-        
-       
-       
-        
-        
-        
-        
+        func isTouching(wave : Wave) -> Bool {
+            for point1 in self.pointsOfCircle {
+                for point2 in wave.pointsOfCircle {
+                    let xDist = point1.position.x - point2.position.x
+                    let yDist = point1.position.y - point2.position.y
+                    let dist = sqrt(xDist*xDist + yDist*yDist)
+                    if dist < touchingRadius {
+                        return true
+                    }
+                }
+            }
+            return false
+        }
         
         func toBeDestroyed() -> Bool {
             return toBeDestroyedVar
@@ -283,20 +276,4 @@ class PureEnergyGame : Game {
         }
     }
 }
-
-
-
-/*func isTouching(wave : Wave, wave : Wave) -> Bool {
- for point1 in pointsOfCircle {
- for point2 in wave.pointsOfCircle {
- let xDist = point2.position.x - point1.position.x
- let yDist = point2.position.y - point1.position.y
- if (sqrt((xDist * xDist) + (yDist * yDist)) < touchingRadius) {
- return true
- }
- }
- }
- return false
- }*/
-
 
