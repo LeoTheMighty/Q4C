@@ -39,7 +39,6 @@ class PureEnergyGame : Game {
         
     }
     
-    
     private var scene : SKScene
     
     private var touchGravity : SKFieldNode?
@@ -86,10 +85,6 @@ class PureEnergyGame : Game {
         
         scene.addChild(complexityCounter)
         }
-
-    
-    
-  
     
     func update(currentTime : TimeInterval) {
         let elapsedTime = currentTime - startTime
@@ -100,8 +95,8 @@ class PureEnergyGame : Game {
             numWaves+=1
             
             // Update the label
-            complexity = numWaves
-            complexityCounter.text = "Complexity: \(complexity)"
+            //complexity = numWaves
+            //complexityCounter.text = "Complexity: \(complexity)"
         }
         
         var index : Int = 0
@@ -109,14 +104,18 @@ class PureEnergyGame : Game {
             wave.updateCircle()
             if (wave.toBeDestroyed()) {
                 waves.remove(at: index)
+                index-=1
             }
             if (index + 1) < waves.count {
                 if wave.isTouching(wave : waves[index + 1]) {
                     // Do the touching :)
                     // wave and waves[index + 1]
                     // both of them need to be removed
+                    complexity+=1
+                    complexityCounter.text = "Complexity: \(complexity)"
                     waves.remove(at: index)
-                    waves.remove(at: index + 1)
+                    waves.remove(at: index)
+                    index-=1
                 }
             }
             index += 1
@@ -138,10 +137,6 @@ class PureEnergyGame : Game {
         touchGravity?.removeFromParent()
         touchGravity = nil
     }
-    
-   
-   
-    
     
     class Wave {
         
