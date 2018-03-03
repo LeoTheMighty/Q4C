@@ -15,17 +15,14 @@ import Foundation
 import SpriteKit
 
 class PureEnergyGame : Game {
-    func startGame() {
+    func saveData() {
         
     }
     
-    func resumeGame() {
+    func loadData() {
         
     }
     
-    func saveGame() {
-        
-    }
     
     func userTap(point: CGPoint) {
         

@@ -10,25 +10,20 @@ import Foundation
 import SpriteKit
 
 class UniversalGame : Game {
-    required init(currentTime : TimeInterval) {
+    func saveData() {
         
     }
     
+    func loadData() {
+        
+    }
+    
+  
     func update(currentTime : TimeInterval) {
         
     }
     
-    func startGame() {
-        
-    }
-    
-    func resumeGame() {
-        
-    }
-    
-    func saveGame() {
-        
-    }
+   
     
     func userTap(point : CGPoint) {
         

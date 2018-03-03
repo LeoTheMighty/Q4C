@@ -11,6 +11,14 @@ import Foundation
 import SpriteKit
 
 class ParticulateGame : Game {
+    func saveData() {
+        
+    }
+    
+    func loadData() {
+        
+    }
+    
    
     //issues still: color und size?
 
@@ -117,17 +125,5 @@ class ParticulateGame : Game {
         }
 
 //what it do? These are not used in pure energy
- func startGame() {
  
- }
- 
- func resumeGame() {
- 
- }
- 
- func saveGame() {
- 
- }
-
-
  }

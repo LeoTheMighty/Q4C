@@ -10,6 +10,14 @@ import Foundation
 import SpriteKit
 
 class MolecularGame : Game {
+    func saveData() {
+        
+    }
+    
+    func loadData() {
+        
+    }
+    
     required init(currentTime : TimeInterval) {
         
     }
@@ -18,17 +26,7 @@ class MolecularGame : Game {
         
     }
     
-    func startGame() {
-        
-    }
-    
-    func resumeGame() {
-        
-    }
-    
-    func saveGame() {
-        
-    }
+   
     
     func userTap(point : CGPoint) {
         
