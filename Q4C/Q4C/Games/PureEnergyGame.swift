@@ -44,7 +44,7 @@ class PureEnergyGame : Game {
     
     private var touchGravity : SKFieldNode?
     private var startGravity = SKFieldNode.radialGravityField()
-    
+
     private let radiusOfUnaffectedCircle : CGFloat = 50
     private let numPointsInWave = 180
     private let massOfPoint : CGFloat = 0.5
@@ -52,6 +52,7 @@ class PureEnergyGame : Game {
     private var waves : [Wave] = []
     private var numWaves : Int = 0
     private var originPoint : CGPoint = CGPoint()
+    private let touchingRadius : CGFloat = 9
     
     private let startGravityStrength : Float = -0.1
     
@@ -60,9 +61,9 @@ class PureEnergyGame : Game {
     
     private let backgroundColorComponent : CGFloat = 48 / 255
     private let waveColorComponent : CGFloat = 255 / 255
-    //private var complexityCounter : SKLabelNode!
     
-    //private var complexity : Int
+    private var complexity : Int = 0
+    private var complexityCounter : SKLabelNode!
     
     init(scene : SKScene, currentTime : TimeInterval) {
         self.startTime = currentTime
@@ -78,29 +79,26 @@ class PureEnergyGame : Game {
         
         waves.append(Wave(scene: scene, originPoint: originPoint, startingRadius: radiusOfUnaffectedCircle, numPointsInWave: numPointsInWave, massOfPoint: massOfPoint, startColorComponent: waveColorComponent, endColorComponent: backgroundColorComponent))
         
-      
-        
-        /* var complexity = 0 {
-            didSet{
-                complexityCounter.text = "Complexity: \(complexity)"
-            }
-        
-        }
-        
         complexityCounter = SKLabelNode(fontNamed: "Copperplate")
         complexityCounter.text = "Complexity: 0"
         complexityCounter.fontColor = SKColor.purple
         complexityCounter.verticalAlignmentMode = .top
         complexityCounter.position = CGPoint(x: 115, y: 400)
-        scene.addChild(complexityCounter)*/
-    }
+        
+        scene.addChild(complexityCounter)
+        }
+
+    
+    
+  
     
     func update(currentTime : TimeInterval) {
         let elapsedTime = currentTime - startTime
-        
         if Int(elapsedTime / timeBetweenWaves) > numWaves {
             waves.append(Wave(scene: scene, originPoint: originPoint, startingRadius: radiusOfUnaffectedCircle, numPointsInWave: numPointsInWave, massOfPoint: massOfPoint, startColorComponent : waveColorComponent, endColorComponent : backgroundColorComponent))
             numWaves+=1
+            complexity = numWaves
+            complexityCounter.text = "Complexity: \(complexity)"
         }
         
         var index : Int = 0
@@ -113,7 +111,26 @@ class PureEnergyGame : Game {
         }
     }
     
-   
+    /*func locateIntersect(wave1 : Wave,  wave2 : Wave) -> Int {
+        //compare distance <-> points in input waves, add complexity when thrshld is Xed
+        for p in pointsOfCircle{
+        //calls an array of points
+        
+        }
+    }*/
+    
+    /*func isTouching(wave : waves, wave2 : waves.Int(numWaves)) -> Bool {
+        for point in wave.pointsOfCircle {
+            for point1 in wave2.pointsOfCircle {
+                let xDist = point1.position.x - point1.position.x
+                let yDist = point1.position.y - point1.position.y
+                if (sqrt((xDist * xDist) + (yDist * yDist)) < touchingRadius) {
+                    return true
+                }
+            }
+        }
+        return false
+    }*/
     
     func userPress(point : CGPoint) {
         touchGravity = SKFieldNode.radialGravityField()
@@ -131,10 +148,9 @@ class PureEnergyGame : Game {
         touchGravity = nil
     }
     
-    //func locateIntersection(point : CGPoint){
-        //take in the points of two waves, if there is overlap, it should output number of overlaps
-        // :) happy valentine's day <3
-    //}
+   
+   
+    
     
     class Wave {
         
@@ -143,7 +159,7 @@ class PureEnergyGame : Game {
         private let touchingRadius : CGFloat = 9
         private let originPoint : CGPoint
         private let numPointsInWave : Int
-        private var pointsOfCircle : [SKNode] = []
+        public var pointsOfCircle : [SKNode] = []
         private let massOfPoint : CGFloat
         private let startingRadius : CGFloat
         private let circle : SKShapeNode
@@ -151,7 +167,8 @@ class PureEnergyGame : Game {
         private let startColorComponent : CGFloat
         private let endColorComponent : CGFloat
         private var toBeDestroyedVar : Bool = false
-        private var complexityCounter : SKLabelNode!
+        
+    
        
         
         init(scene : SKScene, originPoint : CGPoint, startingRadius : CGFloat, numPointsInWave : Int, massOfPoint : CGFloat, startColorComponent : CGFloat, endColorComponent : CGFloat) {
@@ -169,19 +186,7 @@ class PureEnergyGame : Game {
             initCircle(scene : scene)
             scene.addChild(circle)
         
-            var complexity = 0 {
-                didSet{
-                    complexityCounter.text = "Complexity: \(complexity)"
-                }
-                
-            }
-            
-            complexityCounter = SKLabelNode(fontNamed: "Copperplate")
-            complexityCounter.text = "Complexity: 0"
-            complexityCounter.fontColor = SKColor.purple
-            complexityCounter.verticalAlignmentMode = .top
-            complexityCounter.position = CGPoint(x: 115, y: 400)
-            scene.addChild(complexityCounter)
+           
         }
         
         func initCircle(scene : SKScene) {
@@ -257,18 +262,13 @@ class PureEnergyGame : Game {
             scene.addChild(circle)
         }
         
-        func isTouching(wave : Wave) -> Bool {
-            for point1 in pointsOfCircle {
-                for point2 in wave.pointsOfCircle {
-                    let xDist = point2.position.x - point1.position.x
-                    let yDist = point2.position.y - point1.position.y
-                    if (sqrt((xDist * xDist) + (yDist * yDist)) < touchingRadius) {
-                        return true
-                    }
-                }
-            }
-            return false
-        }
+        
+       
+       
+        
+        
+        
+        
         
         func toBeDestroyed() -> Bool {
             return toBeDestroyedVar
@@ -283,5 +283,20 @@ class PureEnergyGame : Game {
         }
     }
 }
+
+
+
+/*func isTouching(wave : Wave, wave : Wave) -> Bool {
+ for point1 in pointsOfCircle {
+ for point2 in wave.pointsOfCircle {
+ let xDist = point2.position.x - point1.position.x
+ let yDist = point2.position.y - point1.position.y
+ if (sqrt((xDist * xDist) + (yDist * yDist)) < touchingRadius) {
+ return true
+ }
+ }
+ }
+ return false
+ }*/
 
 
