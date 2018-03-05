@@ -11,6 +11,7 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    
     private var universe : Universe = Universe()
     
     let pauseButtonNode = SKSpriteNode(imageNamed: "pauseButton")
@@ -60,6 +61,18 @@ class GameScene: SKScene {
         pauseButtonNode.color = UIColor(red: waveColorComponent, green: waveColorComponent, blue: waveColorComponent, alpha: 1)
         pauseButtonNode.position = CGPoint(x : -(self.size.width / 2) + pauseButtonNode.size.width * 3 / 2, y : (self.size.height / 2) - pauseButtonNode.size.height * 3 / 2)
         addChild(pauseButtonNode)
+    }
+    
+    func userTap(atPoint pos : CGPoint) {
+        universe.game.userTap(point: pos)
+    }
+    
+    func userSwipe(atPoint pos : CGPoint) {
+        universe.game.userSwipe(point: pos)
+    }
+    
+    func userSwirl(atPoint pos : CGPoint) {
+        universe.game.userSwirl(point: pos)
     }
     
     func touchDown(atPoint pos : CGPoint) {
