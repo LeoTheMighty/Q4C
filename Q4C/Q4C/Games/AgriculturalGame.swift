@@ -8,6 +8,12 @@
 
 import Foundation
 import SpriteKit
+/* actions: swipe 
+ *
+ *
+ *
+ */
+
 
 class AgriculturalGame : Game {
     func saveData() {

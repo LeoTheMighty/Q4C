@@ -8,7 +8,11 @@
 
 import Foundation
 import SpriteKit
-
+/*swipe to fight, swirl to mate, tap to collect food
+ *
+ *
+ *content: energy in form of food, aqueous solution, mutation opportunities
+ */
 class BiologicalGame : Game {
     func saveData() {
         
