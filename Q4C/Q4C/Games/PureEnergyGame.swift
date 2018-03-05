@@ -33,26 +33,6 @@ import SpriteKit
  *
  */
 class PureEnergyGame : Game {
-    func saveData() {
-        
-    }
-    
-    func loadData() {
-        
-    }
-    
-    
-    func userTap(point: CGPoint) {
-        
-    }
-    
-    func userSwipe(point: CGPoint) {
-        
-    }
-    
-    func userSwirl(point: CGPoint) {
-        
-    }
     
     private var scene : SKScene
     
@@ -103,7 +83,15 @@ class PureEnergyGame : Game {
         complexityCounter.position = CGPoint(x: 115, y: 400)
         
         scene.addChild(complexityCounter)
-        }
+    }
+    
+    func saveData() {
+        
+    }
+    
+    func loadData() {
+        
+    }
     
     func update(currentTime : TimeInterval) {
         let elapsedTime = currentTime - startTime
@@ -159,11 +147,23 @@ class PureEnergyGame : Game {
         touchGravity = nil
     }
     
-    class Wave {
+    func userTap(point: CGPoint) {
         
+    }
+    
+    func userSwipe(point: CGPoint) {
+        
+    }
+    
+    func userSwirl(point: CGPoint) {
+        
+    }
+    
+    class Wave {
         private let birthTime : TimeInterval
         private let lifeSpan : TimeInterval = 15
         private let touchingRadius : CGFloat = 9
+        private let maxVelocity : CGFloat = 100
         private let originPoint : CGPoint
         private let numPointsInWave : Int
         public var pointsOfCircle : [SKNode] = []
@@ -171,8 +171,10 @@ class PureEnergyGame : Game {
         private let startingRadius : CGFloat
         private let circle : SKShapeNode
         private let scene : SKScene
+        
         private let startColorComponent : CGFloat
         private let endColorComponent : CGFloat
+        
         private var toBeDestroyedVar : Bool = false
         
         init(scene : SKScene, originPoint : CGPoint, startingRadius : CGFloat, numPointsInWave : Int, massOfPoint : CGFloat, startColorComponent : CGFloat, endColorComponent : CGFloat) {
@@ -208,6 +210,7 @@ class PureEnergyGame : Game {
                 physicsPoint.physicsBody?.pinned = false
                 physicsPoint.physicsBody?.affectedByGravity = false
                 physicsPoint.physicsBody?.isDynamic = true
+                physicsPoint.physicsBody?.linearDamping = 0.1
                 physicsPoint.isHidden = false
                 pointsOfCircle.append(physicsPoint)
                 
@@ -239,6 +242,21 @@ class PureEnergyGame : Game {
                 //point.physicsBody!.applyImpulse(CGVector(dx: 1, dy: 1))
                 point.physicsBody!.applyForce(GameScene.vectorFromPoints(point1: point.position, point2: circlePath.currentPoint))
                 point.physicsBody!.applyForce(GameScene.vectorFromPoints(point1: point.position, point2: pointsOfCircle[nextIndex].position))
+                // CAP THE VELOCITY OF THE POINT
+                
+                let vx : CGFloat = point.physicsBody!.velocity.dx
+                let vy : CGFloat = point.physicsBody!.velocity.dy
+                let pointVelocityTotal : CGFloat = CGFloat(sqrt(vx*vx + vy*vy))
+                if pointVelocityTotal > maxVelocity {
+                    let cappingConstant : CGFloat = 0.005
+                    let c = (pointVelocityTotal - maxVelocity) * cappingConstant
+                    let vector : CGVector = CGVector(dx: -vx*c, dy: -vy*c)
+                    point.physicsBody?.applyForce(vector)
+                    
+//                    point.physicsBody?.velocity.dx = cos(theta) * maxVelocity
+//                    point.physicsBody?.velocity.dy = sin(theta) * maxVelocity
+                }
+                
                 circlePath.addLine(to: point.position)
                 if nextIndex == pointsOfCircle.count - 1 {
                     nextIndex = 0
