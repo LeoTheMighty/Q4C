@@ -13,6 +13,24 @@ import SpriteKit
  *
  *content: energy in form of food, aqueous solution, mutation opportunities
  */
+
+/* Overview:
+ *
+ * Actions:
+ *  - Swipe
+ *      - Pushes the particles
+ *  - Tap
+ *      - Combines two paticles together to create a greater molecule
+ *  - Swirl
+ *      - Congregates the molecules together to create
+ *
+ * Objects:
+ *
+ *
+ * Transition (to next):
+ *
+ *
+ */
 class BiologicalGame : Game {
     func saveData() {
         

@@ -10,6 +10,23 @@
 import Foundation
 import SpriteKit
 
+/* Overview:
+ *
+ * Actions:
+ *  - Swipe
+ *      - Pushes the particles
+ *  - Tap
+ *      - Combines two paticles together to create a greater molecule
+ *  - Swirl
+ *      - Congregates the molecules together to create
+ *
+ * Objects:
+ *
+ *
+ * Transition (to next):
+ *
+ *
+ */
 class ParticulateGame : Game {
     func saveData() {
         

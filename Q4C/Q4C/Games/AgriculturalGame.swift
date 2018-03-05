@@ -8,13 +8,24 @@
 
 import Foundation
 import SpriteKit
-/* actions: swipe 
+
+/* Overview:
  *
+ * Actions:
+ *  - Swipe
+ *      - Pushes the particles
+ *  - Tap
+ *      - Combines two paticles together to create a greater molecule
+ *  - Swirl
+ *      - Congregates the molecules together to create
+ *
+ * Objects:
+ *
+ *
+ * Transition (to next):
  *
  *
  */
-
-
 class AgriculturalGame : Game {
     func saveData() {
         

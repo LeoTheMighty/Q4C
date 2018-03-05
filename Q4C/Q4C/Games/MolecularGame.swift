@@ -22,6 +22,9 @@ import SpriteKit
  * Objects:
  *
  *
+ * Transition (to next):
+ *
+ *
  */
 class MolecularGame : Game {
     func saveData() {
