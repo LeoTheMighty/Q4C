@@ -8,10 +8,11 @@
 
 import Foundation
 import SpriteKit
-/* actions: swipe 
+/* content: two hierarchies of biology, those which adhere to some recognizable function
+ *those who fit chaotic behavior
  *
- *
- *
+ *action: greater source of energy means more going on, swipe now can
+swipe wages war, tap trades, swirl creates larger tribe
  */
 
 
