@@ -104,10 +104,10 @@ class PureEnergyGame : Game {
         for wave in waves {
             wave.updateCircle()
             if (wave.toBeDestroyed()) {
+                //waves.removeFirst()
                 waves.remove(at: index)
-                index-=1
             }
-            if (index + 1) < waves.count {
+            else if (index + 1) < waves.count {
                 if wave.isTouching(wave : waves[index + 1]) {
                     // Do the touching :)
                     // wave and waves[index + 1]
@@ -119,7 +119,9 @@ class PureEnergyGame : Game {
                     index-=1
                 }
             }
-            index += 1
+            else {
+                index += 1
+            }
         }
     }
     
@@ -246,13 +248,22 @@ class PureEnergyGame : Game {
         }
         
         func isTouching(wave : Wave) -> Bool {
-            for point1 in self.pointsOfCircle {
-                for point2 in wave.pointsOfCircle {
-                    let xDist = point1.position.x - point2.position.x
-                    let yDist = point1.position.y - point2.position.y
-                    let dist = sqrt(xDist*xDist + yDist*yDist)
-                    if dist < touchingRadius {
-                        return true
+            if (wave.birthTime == self.birthTime) {
+                return false
+            }
+            //var index = 0
+            for i in 0...(pointsOfCircle.count - 1) {
+                let point1 = self.pointsOfCircle[i]
+                for di in -3...3 {
+                    let index = i + di
+                    if index >= 0 && index < pointsOfCircle.count {
+                        let point2 = wave.pointsOfCircle[index]
+                        let xDist = point1.position.x - point2.position.x
+                        let yDist = point1.position.y - point2.position.y
+                        let dist = sqrt(xDist*xDist + yDist*yDist)
+                        if dist < touchingRadius {
+                            return true
+                        }
                     }
                 }
             }
