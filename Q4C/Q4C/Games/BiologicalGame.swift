@@ -45,21 +45,18 @@ class BiologicalGame : Game {
     func update(currentTime : TimeInterval) {
         
     }
-    /*private var scene : SKScene
-    
-    private var protons : [Proton] = []
-    private var numProtons : Int = 0
-    private var originPoint : CGPoint = CGPoint()
-    
-    private var startTime : TimeInterval = 0
-    private let timeBetweenProtons : TimeInterval = 3.0
-    
-    private let backgroundColorComponent : CGFloat = 48/255
-    private var complexityCounter : SKLabelNode!*/
+  
     
     private var scene : SKScene
     private var cells : [Cell] = []
-    private var originPoint
+    private var numCells : Int = 0
+    private var originPoint : CGPoint //should be random
+    
+    private var startTime : TimeInterval = 0
+    private let backgroundColorComponent : CGFloat = 48/255
+    private var complexity : Int //get value from previous game
+    private var complexityCounter : SKLabelNode
+    
     
     
     class Cell {
@@ -68,13 +65,15 @@ class BiologicalGame : Game {
        private var longevity : TimeInterval = 60
         
        init(scene : SKScene, currentTime : TimeInterval) {
-            
+        
+        
         }
         //energy
       //DNA: manifested by which one swiped at other wins, duration of life,
       //
     
         func reproduce{
+            
         
         }
         }
