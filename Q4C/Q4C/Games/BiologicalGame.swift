@@ -13,6 +13,7 @@ import SpriteKit
  *
  *content: energy in form of food, aqueous solution, mutation opportunities
  */
+//emergent properties: eventually there should be an ecosystem of cells, perhaps some are better at pairing, while some are stronger but faster
 
 /* Overview:
  *
@@ -25,8 +26,8 @@ import SpriteKit
  *      - Congregates the molecules together to create
  *
  * Objects:
- *
- *
+ *cells, crumbs, ripples to imitate fluid
+ *note: cells should be animated transparent amoeba
  * Transition (to next):
  *
  *
@@ -63,6 +64,8 @@ class BiologicalGame : Game {
        private var energy : Int = 30
        private var dna : Int = 15
        private var longevity : TimeInterval = 60
+        private var pairing site : CGPoint
+        private var amoeba : SKSpriteNode
         
        init(scene : SKScene, currentTime : TimeInterval) {
         
@@ -72,13 +75,21 @@ class BiologicalGame : Game {
       //DNA: manifested by which one swiped at other wins, duration of life,
       //
     
-        func reproduce{
-            
+        func reproduce(){
+            //this should allow two cells to make three
         
         }
+        
+        func pair(){
+            //this should allow two to come together, strengths are sum, speeds are lessened, requires more
+            //energy but does not increase longevity
+            //use pairing site variable
         }
     }
     
+
+
+
     class Energy {
         //takes form of smaller crumb particle which is engulfed allows for more motion but shortens longevity
     }
