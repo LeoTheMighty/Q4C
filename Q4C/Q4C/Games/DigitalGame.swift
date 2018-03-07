@@ -27,6 +27,7 @@ import SpriteKit
  *
  */
 class DigitalGame : Game {
+    
     func saveData() {
         
     }
@@ -47,11 +48,11 @@ class DigitalGame : Game {
         
     }
     
-    func userSwipe(point : CGPoint) {
+    func userSwipe(point : CGPoint, toPoint : CGPoint) {
         
     }
     
-    func userSwirl(point : CGPoint) {
+    func userSwirl(point : CGPoint, radius : CGFloat) {
         
     }
     

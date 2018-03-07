@@ -43,17 +43,15 @@ class MolecularGame : Game {
         
     }
     
-   
-    
     func userTap(point : CGPoint) {
         
     }
     
-    func userSwipe(point : CGPoint) {
+    func userSwipe(point : CGPoint, toPoint : CGPoint) {
         
     }
     
-    func userSwirl(point : CGPoint) {
+    func userSwirl(point : CGPoint, radius : CGFloat) {
         
     }
     

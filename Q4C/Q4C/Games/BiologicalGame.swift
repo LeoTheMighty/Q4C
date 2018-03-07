@@ -33,6 +33,24 @@ import SpriteKit
  *
  */
 class BiologicalGame : Game {
+    
+    private var scene : SKScene
+    private var cells : [Cell] = []
+    private var numCells : Int = 0
+    private var originPoint : CGPoint //should be random
+    
+    private var startTime : TimeInterval = 0
+    private let backgroundColorComponent : CGFloat = 48/255
+    private var complexity : Int //get value from previous game
+    private var complexityCounter : SKLabelNode
+    
+    init() {
+        complexity = 0
+        originPoint = CGPoint()
+        scene = SKScene()
+        complexityCounter = SKLabelNode()
+    }
+    
     func saveData() {
         
     }
@@ -46,17 +64,6 @@ class BiologicalGame : Game {
     func update(currentTime : TimeInterval) {
         
     }
-  
-    
-    private var scene : SKScene
-    private var cells : [Cell] = []
-    private var numCells : Int = 0
-    private var originPoint : CGPoint //should be random
-    
-    private var startTime : TimeInterval = 0
-    private let backgroundColorComponent : CGFloat = 48/255
-    private var complexity : Int //get value from previous game
-    private var complexityCounter : SKLabelNode
     
     
     
@@ -64,12 +71,11 @@ class BiologicalGame : Game {
        private var energy : Int = 30
        private var dna : Int = 15
        private var longevity : TimeInterval = 60
-        private var pairing site : CGPoint
+        private var pairingSite : CGPoint
         private var amoeba : SKSpriteNode
-        
-       init(scene : SKScene, currentTime : TimeInterval) {
-        
-        
+        init(scene : SKScene, currentTime : TimeInterval) {
+            pairingSite = CGPoint()
+            amoeba = SKSpriteNode()
         }
         //energy
       //DNA: manifested by which one swiped at other wins, duration of life,
@@ -98,11 +104,11 @@ class BiologicalGame : Game {
         //this action is mutualistic
     }
     
-    func userSwipe(point : CGPoint) {
-        //this action attacks
+    func userSwipe(point : CGPoint, toPoint : CGPoint) {
+         //this action attacks
     }
     
-    func userSwirl(point : CGPoint) {
+    func userSwirl(point : CGPoint, radius : CGFloat) {
         //this action exchanges DNA between several
     }
     
