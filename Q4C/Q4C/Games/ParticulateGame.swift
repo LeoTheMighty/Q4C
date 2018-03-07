@@ -108,28 +108,23 @@ class ParticulateGame : Game {
     
     
     class Proton {
-        private let scene : SKScene
+        private var scene : SKScene
         private var lifeTime : TimeInterval = 35 //how long the proton lasts
         private var origin : CGPoint //where the proton is born
-        private let startColorComponent : CGFloat //the color of the proton
-        private let prot : SKSpriteNode //image that is the proton
+        private let startColorComponent : CGFloat = 155/256 //the color of the proton
+        private var prot : SKSpriteNode //image that is the proton
         
-    
-
-    
-    
-    
-        init(lifeTime : TimeInterval, prot : SKSpriteNode) {
+        init(scene : SKScene, lifeTime : TimeInterval, prot : SKSpriteNode) {
             
-            let prot = SKSpriteNode(imageNamed: "ball")
-
+            self.prot = SKSpriteNode(imageNamed: "ball")
+            self.scene = scene
             
             prot.physicsBody = SKPhysicsBody(texture : prot.texture!, size: CGSize(width: 0.5, height: 0.5))
         
             origin = CGPoint(x: -scene.size.width/2, y: -scene.size.height/2)
             
             
-            self.startColorComponent = startColorComponent
+            //self.startColorComponent = startColorComponent
            
             scene.addChild(prot)
         }

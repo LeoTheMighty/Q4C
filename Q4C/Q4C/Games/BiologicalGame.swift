@@ -32,9 +32,6 @@ import SpriteKit
  *
  *
  */
-<<<<<<< HEAD
-/*class BiologicalGame : Game {
-=======
 class BiologicalGame : Game {
     
     private var scene : SKScene
@@ -54,7 +51,6 @@ class BiologicalGame : Game {
         complexityCounter = SKLabelNode()
     }
     
->>>>>>> dad7d800f8c4b9cbac1f12b6fecf4b51617b4eff
     func saveData() {
         
     }
@@ -127,4 +123,4 @@ class BiologicalGame : Game {
     func userReleaseTouch(point : CGPoint) {
         
     }
-}*/
+}
