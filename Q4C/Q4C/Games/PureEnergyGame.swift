@@ -59,6 +59,8 @@ class PureEnergyGame : Game {
     private var complexity : Int = 0
     private var complexityCounter : SKLabelNode!
     
+    private var particle : SKSpriteNode
+    
     init(scene : SKScene, currentTime : TimeInterval) {
         
         // Check for userdefaults
@@ -83,6 +85,11 @@ class PureEnergyGame : Game {
         complexityCounter.position = CGPoint(x: 115, y: 400)
         
         scene.addChild(complexityCounter)
+        
+        particle = SKSpriteNode(imageNamed: "ball")
+        particle.position = CGPoint(x: scene.size.width / 2, y: scene.size.height / 2)
+        particle.size = CGSize(width: 25, height: 25)
+        scene.addChild(particle)
     }
     
     func saveData() {
@@ -156,7 +163,7 @@ class PureEnergyGame : Game {
     }
     
     func userSwirl(point : CGPoint, radius : CGFloat) {
-        
+        particle.position = point
     }
     
     class Wave {

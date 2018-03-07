@@ -13,7 +13,7 @@ class GameScene: SKScene {
     
     private var ifCanBeTap : Bool = false
     private let tapRadius : CGFloat = 5
-    private let swirlEndRadius : CGFloat = 25
+    private let swirlEndRadius : CGFloat = 50
     private var ifTouching : Bool = false
     private var touchPos : CGPoint = CGPoint(x: 0, y: 0)
     private var furthestPressPos : CGPoint = CGPoint(x: 0, y: 0)
@@ -35,7 +35,7 @@ class GameScene: SKScene {
         
         self.scaleMode = .fill
         
-        universe = Universe(scene: self, levelName: "Particulate")
+        universe = Universe(scene: self, levelName: "Pure Energy")
         
         //BOUNDS OF THE VIEW
         print("Width is " + String.init(describing : self.view?.bounds.width))
