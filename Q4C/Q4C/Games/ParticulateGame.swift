@@ -66,9 +66,7 @@ class ParticulateGame : Game {
         complexityCounter.text = "Complexity: 0"
         complexityCounter.horizontalAlignmentMode = .right
         complexityCounter.position = CGPoint(x: 0, y: 0)
-        //addChild(complexityCounter)
         
-        //proton.append(
     
     
     }
@@ -98,35 +96,34 @@ class ParticulateGame : Game {
     
     
     
-   class Proton {
-        //establish the properties of class proton
-        private var lifeTime : TimeInterval = 35
-        private var origin : CGPoint
-        private let startColorComponent : CGFloat
-        private let endColorComponent : CGFloat
-        //private let scene : SKScene
-        private var texture: SKTexture?
-       // private let size : 
-    
-    
-    
-    init(scene : SKScene, startColorComponent : CGFloat, endColorComponent : CGFloat, lifeTime : TimeInterval, origin : CGPoint, prot : SKSpriteNode) {
+    class Proton {
+        private let scene : SKScene
+        private var lifeTime : TimeInterval = 35 //how long the proton lasts
+        private var origin : CGPoint //where the proton is born
+        private let startColorComponent : CGFloat //the color of the proton
+        private let prot : SKSpriteNode //image that is the proton
         
-        let prot = SKSpriteNode(imageNamed: "ball")
+    
 
-        /*prot.position.x =
-            prot.position.y =*/
-            prot.texture = SKTexture()
-            //prot.size = CGSizeMake
+    
+    
+    
+        init(lifeTime : TimeInterval, prot : SKSpriteNode) {
+            
+            let prot = SKSpriteNode(imageNamed: "ball")
+
+            
             prot.physicsBody = SKPhysicsBody(texture : prot.texture!, size: CGSize(width: 0.5, height: 0.5))
         
-            self.origin = origin
+            origin = CGPoint(x: -scene.size.width/2, y: -scene.size.height/2)
+            
+            
             self.startColorComponent = startColorComponent
-            self.endColorComponent = endColorComponent
-           }
+           
+            scene.addChild(prot)
+        }
         
-        
-    
+   
     }
         //these also are not used
         func userTap(point : CGPoint) {

@@ -26,7 +26,7 @@ class GameScene: SKScene {
         
         self.scaleMode = .fill
         
-        universe = Universe(scene: self, levelName: "Pure Energy")
+        universe = Universe(scene: self, levelName: "Particulate")
         
         //BOUNDS OF THE VIEW
         print("Width is " + String.init(describing : self.view?.bounds.width))

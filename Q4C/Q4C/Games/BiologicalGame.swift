@@ -32,7 +32,7 @@ import SpriteKit
  *
  *
  */
-class BiologicalGame : Game {
+/*class BiologicalGame : Game {
     func saveData() {
         
     }
@@ -64,7 +64,7 @@ class BiologicalGame : Game {
        private var energy : Int = 30
        private var dna : Int = 15
        private var longevity : TimeInterval = 60
-        private var pairing site : CGPoint
+        private var pairingSite : CGPoint
         private var amoeba : SKSpriteNode
         
        init(scene : SKScene, currentTime : TimeInterval) {
@@ -117,4 +117,4 @@ class BiologicalGame : Game {
     func userReleaseTouch(point : CGPoint) {
         
     }
-}
+}*/
