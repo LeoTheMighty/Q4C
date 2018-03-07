@@ -79,7 +79,18 @@ class ParticulateGame : Game {
     
     
     
-   
+    //these also are not used
+    func userTap(point : CGPoint) {
+        
+    }
+    
+    func userSwipe(point : CGPoint, toPoint : CGPoint) {
+        
+    }
+    
+    func userSwirl(point : CGPoint, radius : CGFloat) {
+        
+    }
     
     func userPress(point : CGPoint) {
         
@@ -125,18 +136,6 @@ class ParticulateGame : Game {
         
    
     }
-        //these also are not used
-        func userTap(point : CGPoint) {
-            
-        }
-        
-        func userSwipe(point : CGPoint) {
-            
-        }
-        
-        func userSwirl(point : CGPoint) {
- 
-        }
 
 //what it do? These are not used in pure energy
  

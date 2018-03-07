@@ -11,10 +11,19 @@ import GameplayKit
 
 class GameScene: SKScene {
     
+    private var ifCanBeTap : Bool = false
+    private let tapRadius : CGFloat = 5
+    private let swirlEndRadius : CGFloat = 25
+    private var ifTouching : Bool = false
+    private var touchPos : CGPoint = CGPoint(x: 0, y: 0)
+    private var furthestPressPos : CGPoint = CGPoint(x: 0, y: 0)
+    private var furthestPressDist : CGFloat = 0
     
     private var universe : Universe = Universe()
     
-    let pauseButtonNode = SKSpriteNode(imageNamed: "pauseButton")
+    private let pauseButtonNode = SKSpriteNode(imageNamed: "pauseButton")
+    private var timePaused : CGFloat = 0
+    private var pausedTime : CGFloat = -1
     var isGamePaused : Bool = false
     
     let menu : MenuScene = MenuScene()
@@ -67,38 +76,78 @@ class GameScene: SKScene {
         universe.game.userTap(point: pos)
     }
     
-    func userSwipe(atPoint pos : CGPoint) {
-        universe.game.userSwipe(point: pos)
+    func userSwipe(atPoint pos1 : CGPoint, toPoint pos2 : CGPoint) {
+        universe.game.userSwipe(point: pos1, toPoint: pos2)
     }
     
-    func userSwirl(atPoint pos : CGPoint) {
-        universe.game.userSwirl(point: pos)
+    func userSwirl(atPoint pos : CGPoint, with radius : CGFloat) {
+        universe.game.userSwirl(point: pos, radius: radius)
     }
     
     func touchDown(atPoint pos : CGPoint) {
         if pauseButtonNode.contains(pos) {
             if !self.isPaused {
                 self.isPaused = true
-                self.view?.isUserInteractionEnabled = false
+                self.view?.isUserInteractionEnabled = true
                 menu.presentMenu(parentScene : self)
             }
             else {
                 self.isPaused = false
                 menu.hideMenu()
-                
             }
         }
         else {
+            // Fundamental action
             universe.game.userPress(point: pos)
+            
+            ifTouching = true
+            touchPos = pos
+            ifCanBeTap = true
         }
     }
     
     func touchMoved(toPoint pos : CGPoint) {
+        // Fundamental action
         universe.game.userTouchMove(point : pos)
+        
+        // Update the furthest Pos
+        let dist = GameScene.dist(point1: touchPos, point2: pos)
+        if dist > tapRadius {
+            ifCanBeTap = false
+        }
+        if dist > furthestPressDist {
+            furthestPressPos = pos
+            furthestPressDist = dist
+        }
     }
     
     func touchUp(atPoint pos : CGPoint) {
+        // Fundamental action
         universe.game.userReleaseTouch(point : pos)
+        let dist = GameScene.dist(point1: touchPos, point2: pos)
+        
+        if ifTouching {
+            if ifCanBeTap {
+                if dist < tapRadius {
+                    userTap(atPoint: touchPos)
+                }
+            }
+            else if dist < swirlEndRadius {
+                // Is a swirl
+                // The point is the midway point between furthest and start
+                // radius is half the distance between them
+                let midwayPoint = GameScene.midwayPoint(point1: touchPos, point2: furthestPressPos)
+                let radius = furthestPressDist / 2
+                userSwirl(atPoint: midwayPoint, with: radius)
+            }
+            else {
+                // Is a swipe
+                userSwipe(atPoint: touchPos, toPoint: pos)
+            }
+        }
+        
+        touchPos = CGPoint(x: 0, y: 0)
+        ifTouching = false
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -126,6 +175,18 @@ class GameScene: SKScene {
         let dx = point2.x - point1.x
         let dy = point2.y - point1.y
         return CGVector(dx: dx, dy: dy)
+    }
+    
+    static func midwayPoint(point1 : CGPoint, point2 : CGPoint) -> CGPoint {
+        let x = point1.x + point2.x
+        let y = point1.y + point2.y
+        return CGPoint(x: x / 2, y: y / 2)
+    }
+    
+    static func dist(point1 : CGPoint, point2 : CGPoint) -> CGFloat {
+        let dx = point2.x - point1.x
+        let dy = point2.y - point1.y
+        return CGFloat(sqrt(dx*dx + dy*dy))
     }
 }
 

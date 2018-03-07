@@ -10,6 +10,11 @@ import Foundation
 import SpriteKit
 
 class SpaceAgeGame : Game {
+    
+    init() {
+        
+    }
+    
     func saveData() {
         
     }
@@ -30,11 +35,11 @@ class SpaceAgeGame : Game {
         
     }
     
-    func userSwipe(point : CGPoint) {
+    func userSwipe(point : CGPoint, toPoint : CGPoint) {
         
     }
     
-    func userSwirl(point : CGPoint) {
+    func userSwirl(point : CGPoint, radius : CGFloat) {
         
     }
     
