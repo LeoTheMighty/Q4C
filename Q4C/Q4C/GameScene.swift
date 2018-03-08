@@ -146,6 +146,8 @@ class GameScene: SKScene {
             }
         }
         
+        furthestPressDist = 0
+        furthestPressPos = CGPoint(x: 0, y: 0)
         touchPos = CGPoint(x: 0, y: 0)
         ifTouching = false
     }

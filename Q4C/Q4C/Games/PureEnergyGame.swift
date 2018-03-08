@@ -39,7 +39,7 @@ class PureEnergyGame : Game {
     private var touchGravity : SKFieldNode?
     private var startGravity = SKFieldNode.radialGravityField()
 
-    private let radiusOfUnaffectedCircle : CGFloat = 50
+    private let radiusOfUnaffectedCircle : CGFloat = 100
     private let numPointsInWave = 180
     private let massOfPoint : CGFloat = 0.5
     
@@ -60,6 +60,7 @@ class PureEnergyGame : Game {
     private var complexityCounter : SKLabelNode!
     
     private var particle : SKSpriteNode
+    private var particleR : SKSpriteNode
     
     init(scene : SKScene, currentTime : TimeInterval) {
         
@@ -90,6 +91,10 @@ class PureEnergyGame : Game {
         particle.position = CGPoint(x: scene.size.width / 2, y: scene.size.height / 2)
         particle.size = CGSize(width: 25, height: 25)
         scene.addChild(particle)
+        particleR = SKSpriteNode(imageNamed: "ball")
+        particleR.position = CGPoint(x: scene.size.width / 2, y: scene.size.height / 2)
+        particleR.size = CGSize(width: 15, height: 15)
+        scene.addChild(particleR)
     }
     
     func saveData() {
@@ -164,6 +169,8 @@ class PureEnergyGame : Game {
     
     func userSwirl(point : CGPoint, radius : CGFloat) {
         particle.position = point
+        particle.size = CGSize(width: radius * 2, height: radius * 2)
+        particleR.position = CGPoint(x: point.x + radius, y: point.y)
     }
     
     class Wave {
