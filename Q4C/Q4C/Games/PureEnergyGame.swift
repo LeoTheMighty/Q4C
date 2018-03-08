@@ -30,6 +30,7 @@ import SpriteKit
  *
  * Transition (to next):
  *
+ * UserDefaults:
  *
  */
 class PureEnergyGame : Game {
@@ -59,8 +60,11 @@ class PureEnergyGame : Game {
     private var complexity : Int = 0
     private var complexityCounter : SKLabelNode!
     
+    // FOR TESTING PORPOISES
     private var particle : SKSpriteNode
     private var particleR : SKSpriteNode
+    
+    //private let defaults = UserDefaults.standard
     
     init(scene : SKScene, currentTime : TimeInterval) {
         
@@ -310,7 +314,7 @@ class PureEnergyGame : Game {
             //var index = 0
             for i in 0...(pointsOfCircle.count - 1) {
                 let point1 = self.pointsOfCircle[i]
-                for di in -3...3 {
+                for di in -0...0 {
                     let index = i + di
                     if index >= 0 && index < pointsOfCircle.count {
                         let point2 = wave.pointsOfCircle[index]
