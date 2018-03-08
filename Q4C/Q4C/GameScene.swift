@@ -72,6 +72,7 @@ class GameScene: SKScene {
         addChild(pauseButtonNode)
     }
     
+    // TODO WE MAY WANT TO REVISIT HOW THESE ARE IMPLEMENTED TO INCREASE ACCURACY FOR DIFFERENT DEVICES
     func userTap(atPoint pos : CGPoint) {
         universe.game.userTap(point: pos)
     }
