@@ -12,8 +12,8 @@ import GameplayKit
 class GameScene: SKScene {
     
     private var ifCanBeTap : Bool = false
-    private let tapRadius : CGFloat = 5
-    private let swirlEndRadius : CGFloat = 50
+    private let tapRadius : CGFloat = 15
+    private let swirlEndRadius : CGFloat = 75
     private var ifTouching : Bool = false
     private var touchPos : CGPoint = CGPoint(x: 0, y: 0)
     private var furthestPressPos : CGPoint = CGPoint(x: 0, y: 0)

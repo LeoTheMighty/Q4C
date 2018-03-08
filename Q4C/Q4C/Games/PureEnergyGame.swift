@@ -160,17 +160,23 @@ class PureEnergyGame : Game {
     }
     
     func userTap(point: CGPoint) {
-        
+        particle.size = CGSize(width: 25, height: 25)
+        particle.position = point
+        particleR.size = CGSize(width: 15, height: 15)
+        particleR.position = point
     }
     
     func userSwipe(point : CGPoint, toPoint : CGPoint) {
-        
+        particle.size = CGSize(width: 25, height: 25)
+        particle.position = point
+        particleR.size = CGSize(width: 15, height: 15)
+        particleR.position = toPoint
     }
     
     func userSwirl(point : CGPoint, radius : CGFloat) {
         particle.position = point
         particle.size = CGSize(width: radius * 2, height: radius * 2)
-        particleR.position = CGPoint(x: point.x + radius, y: point.y)
+        //particleR.position = CGPoint(x: point.x + radius, y: point.y)
     }
     
     class Wave {
