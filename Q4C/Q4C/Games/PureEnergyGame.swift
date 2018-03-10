@@ -40,8 +40,8 @@ class PureEnergyGame : Game {
     private var touchGravity : SKFieldNode?
     private var startGravity = SKFieldNode.radialGravityField()
 
-    private let radiusOfUnaffectedCircle : CGFloat = 100
-    private let numPointsInWave = 180
+    private let radiusOfUnaffectedCircle : CGFloat = 25
+    private let numPointsInWave = 120
     private let massOfPoint : CGFloat = 0.5
     
     private var waves : [Wave] = []
@@ -49,16 +49,36 @@ class PureEnergyGame : Game {
     private var originPoint : CGPoint = CGPoint()
     private let touchingRadius : CGFloat = 9
     
-    private let startGravityStrength : Float = -0.1
+    private var protons : [Proton] = []
+    private let protonsPerWave : Int = 10
+    
+    private let startGravityStrength : Float = -0.25
     
     private var startTime : TimeInterval = 0
-    private let timeBetweenWaves : TimeInterval = 4.0
+    private let timeBetweenWaves : TimeInterval = 2.5
     
-    private let backgroundColorComponent : CGFloat = 48 / 255
+    private let backgroundColorComponent : CGFloat = 36 / 255
     private let waveColorComponent : CGFloat = 255 / 255
     
     private var complexity : Int = 0
     private var complexityCounter : SKLabelNode!
+    
+    //private let wall : SKNode
+    
+    // Collision bit masks
+    let waveCategory  : UInt32 = 0x1 << 1
+    let protonCategory : UInt32 = 0x1 << 2
+    let wallCategory : UInt32 = 0x1 << 3
+    
+    // Field bit masks NOT IMPLEMENTED
+    let protonGravityCategory : UInt32 = 0x1 << 4
+    let startGravityCategory : UInt32 = 0x1 << 5
+    let touchGravityCategory : UInt32 = 0x1 << 6
+    
+    let protonMovementBiasPoint : CGPoint
+    
+    //let GreenBarCategory : UInt32 = 0x1 << 4
+    //let WallCategory : UInt32 = 0x1 << 5
     
     // FOR TESTING PORPOISES
     private var particle : SKSpriteNode
@@ -81,7 +101,7 @@ class PureEnergyGame : Game {
         startGravity.position = originPoint
         scene.addChild(startGravity)
         
-        waves.append(Wave(scene: scene, originPoint: originPoint, startingRadius: radiusOfUnaffectedCircle, numPointsInWave: numPointsInWave, massOfPoint: massOfPoint, startColorComponent: waveColorComponent, endColorComponent: backgroundColorComponent))
+        waves.append(Wave(scene: scene, originPoint: originPoint, startingRadius: radiusOfUnaffectedCircle, numPointsInWave: numPointsInWave, massOfPoint: massOfPoint, startColorComponent: waveColorComponent, endColorComponent: backgroundColorComponent, category: waveCategory, collisionMask: 0))
         
         complexityCounter = SKLabelNode(fontNamed: "Copperplate")
         complexityCounter.text = "Complexity: 0"
@@ -99,6 +119,14 @@ class PureEnergyGame : Game {
         particleR.position = CGPoint(x: scene.size.width / 2, y: scene.size.height / 2)
         particleR.size = CGSize(width: 15, height: 15)
         scene.addChild(particleR)
+        
+        let p = SKPhysicsBody(edgeLoopFrom: CGRect(x: 0, y: 0, width: scene.size.width , height: scene.size.height))
+        p.categoryBitMask = wallCategory
+        p.collisionBitMask = protonCategory
+        var rect : CGRect = scene.frame
+        scene.physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: rect.minX - 10, y: rect.minY - 10, width: rect.width + 20, height: rect.height + 20))
+        
+        protonMovementBiasPoint = CGPoint(x: scene.size.width / 2, y: scene.size.height / 2)
     }
     
     func saveData() {
@@ -114,37 +142,62 @@ class PureEnergyGame : Game {
         // If the elapsed time calls for another wave, create another one
         if Int(elapsedTime / timeBetweenWaves) > numWaves {
             // Append another wave to the waves array
-            waves.append(Wave(scene: scene, originPoint: originPoint, startingRadius: radiusOfUnaffectedCircle, numPointsInWave: numPointsInWave, massOfPoint: massOfPoint, startColorComponent : waveColorComponent, endColorComponent : backgroundColorComponent))
+            waves.append(Wave(scene: scene, originPoint: originPoint, startingRadius: radiusOfUnaffectedCircle, numPointsInWave: numPointsInWave, massOfPoint: massOfPoint, startColorComponent : waveColorComponent, endColorComponent : backgroundColorComponent, category: waveCategory, collisionMask: 0))
             numWaves+=1
             
             // Update the label
             //complexity = numWaves
             //complexityCounter.text = "Complexity: \(complexity)"
         }
-        
-        var index : Int = 0
-        for wave in waves {
-            wave.updateCircle()
-            if (wave.toBeDestroyed()) {
-                //waves.removeFirst()
-                waves.remove(at: index)
-            }
-            else if (index + 1) < waves.count {
-                if wave.isTouching(wave : waves[index + 1]) {
-                    // Do the touching :)
-                    // wave and waves[index + 1]
-                    // both of them need to be removed
-                    complexity+=1
-                    complexityCounter.text = "Complexity: \(complexity)"
+        var ifRepeat = false;
+        repeat {
+            ifRepeat = false;
+            var index : Int = 0
+            for wave in waves {
+                wave.updateCircle()
+                if (wave.toBeDestroyed()) {
                     waves.remove(at: index)
-                    waves.remove(at: index)
-                    index-=1
+                    ifRepeat = true;
+                    break;
+                }
+                else if (index + 1) < waves.count {
+                    if wave.isTouching(wave : waves[index + 1]) {
+                        // Do the touching :)
+                        // wave and waves[index + 1]
+                        // both of them need to be removed
+                        complexity+=1
+                        complexityCounter.text = "Complexity: \(complexity)"
+                        protAppear(wave: waves[index])
+                        waves.remove(at: index)
+                        protAppear(wave: waves[index])
+                        waves.remove(at: index)
+                        ifRepeat = true;
+                        break;
+                    }
+                    else {
+                        index += 1
+                    }
                 }
             }
-            else {
-                index += 1
-            }
+        } while(ifRepeat);
+        
+        for p in protons {
+            p.randomMovement(withBiasToward: protonMovementBiasPoint)
         }
+    }
+    
+    func protAppear(wave : Wave) {
+        for _ in 0..<protonsPerWave {
+            let prot : Proton = Proton(scene: scene, pos: wave.getRandomCirclePos(), vel: randomVector(randComponent: 500.0), category: protonCategory,
+                                       collisionMask: protonCategory | wallCategory)
+            protons.append(prot)
+        }
+    }
+    
+    func randomVector(randComponent : CGFloat) -> CGVector {
+        let dx = CGFloat(((drand48() * 2) - 1.0)) * randComponent
+        let dy = CGFloat(((drand48() * 2) - 1.0)) * randComponent
+        return CGVector(dx: dx, dy: dy)
     }
     
     func userPress(point : CGPoint) {
@@ -185,7 +238,7 @@ class PureEnergyGame : Game {
     
     class Wave {
         private let birthTime : TimeInterval
-        private let lifeSpan : TimeInterval = 15
+        private let lifeSpan : TimeInterval = 9
         private let touchingRadius : CGFloat = 9
         private let maxVelocity : CGFloat = 100
         private let originPoint : CGPoint
@@ -195,13 +248,15 @@ class PureEnergyGame : Game {
         private let startingRadius : CGFloat
         private let circle : SKShapeNode
         private let scene : SKScene
+        private let category : UInt32
+        private let collisionMask : UInt32
         
         private let startColorComponent : CGFloat
         private let endColorComponent : CGFloat
         
         private var toBeDestroyedVar : Bool = false
         
-        init(scene : SKScene, originPoint : CGPoint, startingRadius : CGFloat, numPointsInWave : Int, massOfPoint : CGFloat, startColorComponent : CGFloat, endColorComponent : CGFloat) {
+        init(scene : SKScene, originPoint : CGPoint, startingRadius : CGFloat, numPointsInWave : Int, massOfPoint : CGFloat, startColorComponent : CGFloat, endColorComponent : CGFloat, category : UInt32, collisionMask : UInt32) {
             birthTime = NSDate().timeIntervalSince1970
             self.startColorComponent = startColorComponent
             self.endColorComponent = endColorComponent
@@ -212,10 +267,10 @@ class PureEnergyGame : Game {
             self.massOfPoint = massOfPoint
             pointsOfCircle = []
             circle = SKShapeNode()
-            
+            self.category = category
+            self.collisionMask = collisionMask
             initCircle(scene : scene)
             scene.addChild(circle)
-           
         }
         
         func initCircle(scene : SKScene) {
@@ -235,11 +290,11 @@ class PureEnergyGame : Game {
                 physicsPoint.physicsBody?.affectedByGravity = false
                 physicsPoint.physicsBody?.isDynamic = true
                 physicsPoint.physicsBody?.linearDamping = 0.1
+                physicsPoint.physicsBody?.categoryBitMask = category
+                physicsPoint.physicsBody?.collisionBitMask = collisionMask
                 physicsPoint.isHidden = false
                 pointsOfCircle.append(physicsPoint)
                 
-                
-            
                 scene.addChild(physicsPoint)
                 physicsPoint.physicsBody!.applyForce(CGVector(dx: 3*physicsPoint.position.x, dy: 3*physicsPoint.position.y))
                 physicsPoint.position = CGPoint(x: physicsPoint.position.x + originPoint.x, y: physicsPoint.position.y + originPoint.y)
@@ -314,10 +369,10 @@ class PureEnergyGame : Game {
             //var index = 0
             for i in 0...(pointsOfCircle.count - 1) {
                 let point1 = self.pointsOfCircle[i]
-                for di in -0...0 {
-                    let index = i + di
-                    if index >= 0 && index < pointsOfCircle.count {
-                        let point2 = wave.pointsOfCircle[index]
+                for di in -3...3 {
+                    let el = i + di
+                    if el >= 0 && el < pointsOfCircle.count {
+                        let point2 = wave.pointsOfCircle[el]
                         let xDist = point1.position.x - point2.position.x
                         let yDist = point1.position.y - point2.position.y
                         let dist = sqrt(xDist*xDist + yDist*yDist)
@@ -328,6 +383,11 @@ class PureEnergyGame : Game {
                 }
             }
             return false
+        }
+        
+        func getRandomCirclePos() -> CGPoint {
+            let randIndex = arc4random_uniform(_ : UInt32(pointsOfCircle.count))
+            return pointsOfCircle[Int(randIndex)].position
         }
         
         func toBeDestroyed() -> Bool {
@@ -342,5 +402,51 @@ class PureEnergyGame : Game {
             }
         }
     }
+    
+    class Proton : SKSpriteNode {
+        
+        private var currentScene : SKScene?
+        private let sizeDimension : CGFloat = 10
+        //private let category : UInt32
+        
+        required init?(coder aDecoder: NSCoder) {
+            super.init(texture: SKTexture(imageNamed: "ball"), color: UIColor(), size: CGSize(width: sizeDimension, height: sizeDimension))
+            currentScene = SKScene()
+            position = CGPoint()
+            size = CGSize()
+        }
+        
+        init(scene: SKScene, pos : CGPoint, vel : CGVector, category : UInt32, collisionMask : UInt32) {
+            super.init(texture: SKTexture(imageNamed: "ball"), color: UIColor(), size: CGSize(width: sizeDimension, height: sizeDimension))
+            texture = SKTexture(imageNamed: "ball")
+            currentScene = scene
+            position = pos
+            size = CGSize(width: sizeDimension, height: sizeDimension)
+            physicsBody = SKPhysicsBody(texture: SKTexture(imageNamed: "ball"), size: size)
+            physicsBody?.velocity = vel
+            physicsBody?.mass = 1
+            physicsBody?.pinned = false
+            physicsBody?.affectedByGravity = false
+            physicsBody?.isDynamic = true
+            physicsBody?.linearDamping = 1.0
+            physicsBody?.restitution = 1.0
+            //self.category = category
+            physicsBody?.categoryBitMask = category
+            physicsBody?.collisionBitMask = category
+            currentScene?.addChild(self)
+        }
+        
+        func randomMovement(withBiasToward point : CGPoint) {
+            // This is a "random" "walk" "with" "a" "by-ias"
+            let moveConstant : CGFloat = 0.50
+            var d = CGFloat((10.5 * drand48()) - 5.23) * moveConstant
+            let dx = d * (point.x - position.x)
+            d = CGFloat((10.5 * drand48()) - 5.23) * moveConstant
+            let dy = d * (point.y - position.y)
+            let randomWalkWithBias = CGVector(dx: dx, dy: dy)
+            physicsBody?.applyForce(randomWalkWithBias)
+        }
+    }
+    
 }
 

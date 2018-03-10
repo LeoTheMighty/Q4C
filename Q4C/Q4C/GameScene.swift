@@ -12,8 +12,8 @@ import GameplayKit
 class GameScene: SKScene {
     
     private var ifCanBeTap : Bool = false
-    private let tapRadius : CGFloat = 15
-    private let swirlEndRadius : CGFloat = 75
+    private let tapRadius : CGFloat = 20
+    private let swipeEndError : CGFloat = 50
     private var ifTouching : Bool = false
     private var touchPos : CGPoint = CGPoint(x: 0, y: 0)
     private var furthestPressPos : CGPoint = CGPoint(x: 0, y: 0)
@@ -133,17 +133,17 @@ class GameScene: SKScene {
                     userTap(atPoint: touchPos)
                 }
             }
-            else if dist < swirlEndRadius {
+            else if GameScene.dist(point1: pos, point2: furthestPressPos) < swipeEndError {
+                // Is a swipe
+                userSwipe(atPoint: touchPos, toPoint: pos)
+            }
+            else {
                 // Is a swirl
                 // The point is the midway point between furthest and start
                 // radius is half the distance between them
                 let midwayPoint = GameScene.midwayPoint(point1: touchPos, point2: furthestPressPos)
                 let radius = furthestPressDist / 2
                 userSwirl(atPoint: midwayPoint, with: radius)
-            }
-            else {
-                // Is a swipe
-                userSwipe(atPoint: touchPos, toPoint: pos)
             }
         }
         
