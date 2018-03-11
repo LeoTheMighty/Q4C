@@ -37,8 +37,13 @@ class PureEnergyGame : Game {
     
     private var scene : SKScene
     
-    private var touchGravity : SKFieldNode?
+    //private var touchGravity : SKFieldNode?
     private var startGravity = SKFieldNode.radialGravityField()
+    private var swipeGravity : [SKFieldNode] = []
+    private let numSwipeGravityPoints = 5
+    private let swipeStrength : CGFloat = 4.0
+    private var swipeStartTime : TimeInterval = 0
+    private let swipeTime : TimeInterval = 3.0
 
     private let radiusOfUnaffectedCircle : CGFloat = 25
     private let numPointsInWave = 120
@@ -76,9 +81,6 @@ class PureEnergyGame : Game {
     let touchGravityCategory : UInt32 = 0x1 << 6
     
     let protonMovementBiasPoint : CGPoint
-    
-    //let GreenBarCategory : UInt32 = 0x1 << 4
-    //let WallCategory : UInt32 = 0x1 << 5
     
     // FOR TESTING PORPOISES
     private var particle : SKSpriteNode
@@ -123,7 +125,7 @@ class PureEnergyGame : Game {
         let p = SKPhysicsBody(edgeLoopFrom: CGRect(x: 0, y: 0, width: scene.size.width , height: scene.size.height))
         p.categoryBitMask = wallCategory
         p.collisionBitMask = protonCategory
-        var rect : CGRect = scene.frame
+        let rect : CGRect = scene.frame
         scene.physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: rect.minX - 10, y: rect.minY - 10, width: rect.width + 20, height: rect.height + 20))
         
         protonMovementBiasPoint = CGPoint(x: scene.size.width / 2, y: scene.size.height / 2)
@@ -184,6 +186,8 @@ class PureEnergyGame : Game {
         for p in protons {
             p.randomMovement(withBiasToward: protonMovementBiasPoint)
         }
+        
+        // DELETE THE GRAVITY THINGS IN THE SKFIELDNODE ARRAY AFTER A WHILE
     }
     
     func protAppear(wave : Wave) {
@@ -201,19 +205,19 @@ class PureEnergyGame : Game {
     }
     
     func userPress(point : CGPoint) {
-        touchGravity = SKFieldNode.radialGravityField()
-        touchGravity?.position = point
-        touchGravity?.strength = -1
-        scene.addChild(touchGravity!)
+        //touchGravity = SKFieldNode.radialGravityField()
+        //touchGravity?.position = point
+        //touchGravity?.strength = -1
+        //scene.addChild(touchGravity!)
     }
     
     func userTouchMove(point : CGPoint) {
-        touchGravity?.position = point
+        //touchGravity?.position = point
     }
     
     func userReleaseTouch(point : CGPoint) {
-        touchGravity?.removeFromParent()
-        touchGravity = nil
+        //touchGravity?.removeFromParent()
+        //touchGravity = nil
     }
     
     func userTap(point: CGPoint) {
@@ -228,12 +232,26 @@ class PureEnergyGame : Game {
         particle.position = point
         particleR.size = CGSize(width: 15, height: 15)
         particleR.position = toPoint
+        
+        let dx : CGFloat = toPoint.x - point.x
+        let dy : CGFloat = toPoint.y - point.y
+        // Add the swipe gravity points
+        for i in 0..<numSwipeGravityPoints {
+            let g : SKFieldNode = SKFieldNode.radialGravityField()
+            let strengthFraction : CGFloat = CGFloat (1 - (i / numSwipeGravityPoints))
+            let positionFraction : CGFloat = CGFloat(i / numSwipeGravityPoints)
+            g.strength = Float((-1) * swipeStrength * strengthFraction)
+            g.position.x = point.x + dx * positionFraction
+            g.position.y = point.y + dy * positionFraction
+            swipeGravity.append(g)
+        }
+        swipeStartTime = NSDate().timeIntervalSince1970
     }
     
     func userSwirl(point : CGPoint, radius : CGFloat) {
         particle.position = point
         particle.size = CGSize(width: radius * 2, height: radius * 2)
-        //particleR.position = CGPoint(x: point.x + radius, y: point.y)
+        particleR.position = point
     }
     
     class Wave {
