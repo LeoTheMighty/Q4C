@@ -39,9 +39,10 @@ class PureEnergyGame : Game {
     
     //private var touchGravity : SKFieldNode?
     private var startGravity = SKFieldNode.radialGravityField()
+    private var protonGravity = SKFieldNode.radialGravityField()
     private var swipeGravity : [SKFieldNode] = []
     private let numSwipeGravityPoints = 5
-    private let swipeStrength : CGFloat = 4.0
+    private let swipeStrength : CGFloat = 0.2
     private var swipeStartTime : TimeInterval = 0
     private let swipeTime : TimeInterval = 3.0
 
@@ -58,6 +59,7 @@ class PureEnergyGame : Game {
     private let protonsPerWave : Int = 10
     
     private let startGravityStrength : Float = -0.25
+    private let protonGravityStrength : Float = -0.05
     
     private var startTime : TimeInterval = 0
     private let timeBetweenWaves : TimeInterval = 2.5
@@ -129,6 +131,10 @@ class PureEnergyGame : Game {
         scene.physicsBody = SKPhysicsBody(edgeLoopFrom: CGRect(x: rect.minX - 10, y: rect.minY - 10, width: rect.width + 20, height: rect.height + 20))
         
         protonMovementBiasPoint = CGPoint(x: scene.size.width / 2, y: scene.size.height / 2)
+        
+        protonGravity.strength = protonGravityStrength
+        protonGravity.position = protonMovementBiasPoint
+        scene.addChild(protonGravity)
     }
     
     func saveData() {
@@ -188,12 +194,20 @@ class PureEnergyGame : Game {
         }
         
         // DELETE THE GRAVITY THINGS IN THE SKFIELDNODE ARRAY AFTER A WHILE
+        let swipeTimeLeft = swipeTime - currentTime + swipeStartTime
+        //print(swipeTimeLeft)
+        if swipeTimeLeft < 0 {
+            for g in swipeGravity {
+                g.removeFromParent()
+            }
+            swipeGravity.removeAll()
+        }
+        
     }
     
     func protAppear(wave : Wave) {
         for _ in 0..<protonsPerWave {
-            let prot : Proton = Proton(scene: scene, pos: wave.getRandomCirclePos(), vel: randomVector(randComponent: 500.0), category: protonCategory,
-                                       collisionMask: protonCategory | wallCategory)
+            let prot : Proton = Proton(scene: scene, pos: wave.getRandomCirclePos(), vel: randomVector(randComponent: 500.0), category: protonCategory, collisionMask: protonCategory | wallCategory)
             protons.append(prot)
         }
     }
@@ -243,6 +257,7 @@ class PureEnergyGame : Game {
             g.strength = Float((-1) * swipeStrength * strengthFraction)
             g.position.x = point.x + dx * positionFraction
             g.position.y = point.y + dy * positionFraction
+            scene.addChild(g)
             swipeGravity.append(g)
         }
         swipeStartTime = NSDate().timeIntervalSince1970
