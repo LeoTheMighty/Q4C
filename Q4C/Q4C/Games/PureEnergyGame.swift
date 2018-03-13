@@ -47,7 +47,7 @@ class PureEnergyGame : Game {
     private let swipeTime : TimeInterval = 3.0
 
     private let radiusOfUnaffectedCircle : CGFloat = 25
-    private let numPointsInWave = 120
+    private let numPointsInWave = 140
     private let massOfPoint : CGFloat = 0.5
     
     private var waves : [Wave] = []
@@ -207,7 +207,7 @@ class PureEnergyGame : Game {
     
     func protAppear(wave : Wave) {
         for _ in 0..<protonsPerWave {
-            let prot : Proton = Proton(scene: scene, pos: wave.getRandomCirclePos(), vel: randomVector(randComponent: 500.0), category: protonCategory, collisionMask: protonCategory | wallCategory)
+            let prot : Proton = Proton(scene: scene, pos: wave.getRandomCirclePos(), vel: randomVector(randComponent: 500.0), category: protonCategory, collisionMask: wallCategory)
             protons.append(prot)
         }
     }
